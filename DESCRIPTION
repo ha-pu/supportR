@@ -1,0 +1,24 @@
+Package: helpR
+Type: Package
+Title: Little helpers
+Version: 0.1.0
+Authors@R: person("Harald", "Puhr", role = c("aut", "cre"), email = "harald.puhr@gmail.com")
+Author: Harald Puhr [aut, cre]
+Maintainer: Harald Puhr <harald.puhr@gmail.com>
+Description: The package consists of various little helper functions.
+License:  GPL (>= 2)
+Encoding: UTF-8
+LazyData: false
+Imports:
+    correlation,
+	ggplot2,
+	insight,
+	interplot,
+	janitor,
+	lmtest,
+	margins,
+	multiwayvcov,
+	parameters
+Suggests:
+    stargazer,
+    tibble
