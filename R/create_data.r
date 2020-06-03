@@ -15,8 +15,8 @@ create_data <- function(variables) {
   )
   data_value$firm_value <- rowSums(data_value * weights)
   
-  data_value$female_coe = rbinom(data_size, 1, 0.5)
-  data_value$firm_value <- data_value$firm_value + data_value$female_coe * 0.1
+  data_value$female_ceo = as.logical(rbinom(data_size, 1, 0.5))
+  data_value$firm_value <- data_value$firm_value + data_value$female_ceo * 0.1
   
   data_value$industry = sample(c("A", "B", "C", "D"), data_size, replace = TRUE)
   data_value$firm_value[data_value$industry == "A"] <- data_value$firm_value[data_value$industry == "A"] + 0.2
@@ -31,6 +31,11 @@ create_data <- function(variables) {
   data_value$firm_value[data_value$country == "D"] <- data_value$firm_value[data_value$country == "D"] - 0.2
   
   data_value$firm_value <- data_value$firm_value + rnorm(data_size)
+  
+  if (requireNamespace("tibble", quietly = TRUE)) {
+	data_value <- tibble::as_tibble(data_value)
+  }
+  
   return(data_value)
 }
 
