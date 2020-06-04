@@ -3,7 +3,7 @@ get_cluster_p <- function(model, var_cluster, use_bootstrap = TRUE, print = TRUE
   # to do: control class(var_cluster) %in% c(vector, matrix, data.frame, tibble?)
   
   # run checks ----
-  if (dim(model$model)[1] != length(var_cluster)) stop("dim(model$model)[1] must equal length(var_cluster)!")
+  if (nrow(model$model) != length(var_cluster)) stop("nrow(model$model) must equal length(var_cluster)!")
   
   # run for "lm" %in% class(model) ----
   if ("lm" %in% class(model)) {

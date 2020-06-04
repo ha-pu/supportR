@@ -4,7 +4,7 @@ plot_cluster <- function(model, var_cluster, iv, moderator, ci = 0.9, use_bootst
   
   # run checks ----
   if (!is.character(iv) | !is.character(moderator)) stop("iv and moderator must be character variables!")
-  if (dim(model$model)[1] != length(var_cluster)) stop("dim(model$model)[1] must equal length(var_cluster)!")
+  if (nrow(model$model) != length(var_cluster)) stop("nrow(model$model) must equal length(var_cluster)!")
   if (!is.numeric(ci) | ci >= 1) {
 	ci <- 0.9
 	warning("ci must be a numeric value < 1! Default for ci is 0.9.")
