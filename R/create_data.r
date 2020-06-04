@@ -38,5 +38,3 @@ create_data <- function(variables) {
   
   return(data_value)
 }
-
-summary(lm(firm_value ~ ., data = create_data()))

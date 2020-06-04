@@ -1,7 +1,7 @@
 Package: helpR
 Type: Package
 Title: Little helpers
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: person("Harald", "Puhr", role = c("aut", "cre"), email = "harald.puhr@gmail.com")
 Author: Harald Puhr [aut, cre]
 Maintainer: Harald Puhr <harald.puhr@gmail.com>
@@ -11,14 +11,19 @@ Encoding: UTF-8
 LazyData: false
 Imports:
     correlation,
+	dplyr,
 	ggplot2,
 	insight,
 	interplot,
 	janitor,
+	lme4,
 	lmtest,
 	margins,
+	Matrix,
 	multiwayvcov,
-	parameters
+	parameters,
+	purrr,
+	tidyr
 Suggests:
     stargazer,
     tibble
