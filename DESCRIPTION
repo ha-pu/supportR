@@ -16,6 +16,7 @@ Imports:
 	insight,
 	interplot,
 	janitor,
+	knitr,
 	lme4,
 	lmtest,
 	margins,

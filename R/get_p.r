@@ -2,7 +2,7 @@
 get_p <- function(model, ...) UseMethod("get_p", model)
 
 # method for class "lm" ----
-get_p.lm <- function(model, var_cluster = NULL, cluster_boot = FALSE, show = TRUE, stargazer = FALSE) {
+get_p.lm <- function(model, var_cluster = NULL, cluster_boot = FALSE, show = TRUE, stargazer = FALSE, ...) {
   
   # run checks ----
   if (!is.null(var_cluster) & nrow(model$model) != length(var_cluster)) stop("When using var_cluster, nrow(model$model) must equal length(var_cluster)!")
@@ -65,7 +65,7 @@ get_p.lm <- function(model, var_cluster = NULL, cluster_boot = FALSE, show = TRU
 get_p.glm <- get_p.lm
 
 # method for class "lmerMod" ----
-get_p.lmerMod <- function(model, show = TRUE) {
+get_p.lmerMod <- function(model, show = TRUE, ...) {
   
   # get data ----
   name <- attributes(model@pp$X)$dimnames[[2]]
