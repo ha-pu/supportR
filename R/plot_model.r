@@ -17,9 +17,9 @@ plot_model.lm <- function(model, iv, moderator, ci = 0.9, name_mod = NULL, name_
   if(is.null(var_cluster)) {
     vcov_mat <- mat
   } else {
-    if (!cluster_boot) {
+    if (!use_bootstrap) {
       vcov_mat <- multiwayvcov::cluster.vcov(model, var_cluster)
-    } else if (cluster_boot) {
+    } else if (use_bootstrap) {
       vcov_mat <- multiwayvcov::cluster.boot(model, var_cluster, R = 1000, boot_type = "wild", wild_type = function() sample(c(-1, 1), 1))
     }
     colnames(vcov_mat) <- colnames(mat)
