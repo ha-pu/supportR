@@ -11,9 +11,9 @@
 }
 
 # create data function ----
-create_data <- function(variables) {
-  data_size <- 1000
-  weights = c(2, -1.5, -0.8, 1.9, 0.5, 0, 0, 0, 0)
+create_data <- function(n = 1000) {
+  data_size <- n
+  weights = runif(9, min = -2, max = 2)
   
   data_value <- data.frame(
     profit = rnorm(data_size),
@@ -29,24 +29,24 @@ create_data <- function(variables) {
   data_value$firm_value <- rowSums(data_value * weights)
   
   data_value$female_ceo = as.logical(rbinom(data_size, 1, 0.5))
-  data_value$firm_value <- data_value$firm_value + data_value$female_ceo * 0.1
+  data_value$firm_value <- data_value$firm_value + data_value$female_ceo * runif(1, -0.1, 0.1)
   
   data_value$industry = sample(c("A", "B", "C", "D"), data_size, replace = TRUE)
-  data_value$firm_value[data_value$industry == "A"] <- data_value$firm_value[data_value$industry == "A"] + 0.2
-  data_value$firm_value[data_value$industry == "B"] <- data_value$firm_value[data_value$industry == "B"] + 0.1
-  data_value$firm_value[data_value$industry == "C"] <- data_value$firm_value[data_value$industry == "C"] - 0.1
-  data_value$firm_value[data_value$industry == "D"] <- data_value$firm_value[data_value$industry == "D"] - 0.2
+  data_value$firm_value[data_value$industry == "A"] <- data_value$firm_value[data_value$industry == "A"] + runif(1, 0, 0.2)
+  data_value$firm_value[data_value$industry == "B"] <- data_value$firm_value[data_value$industry == "B"] + runif(1, -0.1, 0.1)
+  data_value$firm_value[data_value$industry == "C"] <- data_value$firm_value[data_value$industry == "C"] - runif(1, -0.1, 0.1)
+  data_value$firm_value[data_value$industry == "D"] <- data_value$firm_value[data_value$industry == "D"] - runif(1, -0.2, 0)
   
   data_value$country = sample(c("A", "B", "C", "D"), data_size, replace = TRUE)
-  data_value$firm_value[data_value$country == "A"] <- data_value$firm_value[data_value$country == "A"] + 0.2
-  data_value$firm_value[data_value$country == "B"] <- data_value$firm_value[data_value$country == "B"] + 0.1
-  data_value$firm_value[data_value$country == "C"] <- data_value$firm_value[data_value$country == "C"] - 0.1
-  data_value$firm_value[data_value$country == "D"] <- data_value$firm_value[data_value$country == "D"] - 0.2
+  data_value$firm_value[data_value$country == "A"] <- data_value$firm_value[data_value$country == "A"] + runif(1, 0, 0.2)
+  data_value$firm_value[data_value$country == "B"] <- data_value$firm_value[data_value$country == "B"] + runif(1, -0.1, 0.1)
+  data_value$firm_value[data_value$country == "C"] <- data_value$firm_value[data_value$country == "C"] - runif(1, -0.1, 0.1)
+  data_value$firm_value[data_value$country == "D"] <- data_value$firm_value[data_value$country == "D"] - runif(1, -0.2, 0)
   
   data_value$firm_value <- data_value$firm_value + rnorm(data_size)
   
   if (requireNamespace("tibble", quietly = TRUE)) {
-	data_value <- tibble::as_tibble(data_value)
+    data_value <- tibble::as_tibble(data_value)
   }
   
   return(data_value)
