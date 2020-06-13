@@ -124,24 +124,24 @@ modular_report <- function(model_list, cv, show_cv, robust_type, var_cluster) {
   out <- dplyr::bind_rows(out)
   out <- tidyr::pivot_longer(out, -c(Coefficients, mod), names_to = "col", values_to = "val")
   
-  out_estimate <- out[out$col == "Estimate",]
-  out_estimate <- tidyr::pivot_wider(out_estimate, names_from = mod, values_from = val)
-  out_estimate <- out_estimate[,-2]
-  
-  out_se <- out[out$col == "Std_Error",]
-  out_se <- tidyr::pivot_wider(out_se, names_from = mod, values_from = val)
-  out_se <- out_se[,-2]
-  
-  out_pvalue <- out[out$col == "p_value",]
-  out_pvalue <- tidyr::pivot_wider(out_pvalue, names_from = mod, values_from = val)
-  out_pvalue <- out_pvalue[,-2]
+  out_estimate <- .get_col(input = out, col = "Estimate")
+  out_pvalue <- .get_col(input = out, col = "p_value")
+  out_se <- .get_col(input = out, col = "Std_Error")
   
   if (!show_cv) {
     out_estimate <- out_estimate[!(out_estimate$Coefficients %in% c("(Intercept)", cv)), -2]
-    out_se <- out_se[!(out_se$Coefficients %in% c("(Intercept)", cv)), -2]
     out_pvalue <- out_pvalue[!(out_pvalue$Coefficients %in% c("(Intercept)", cv)), -2]
+	out_se <- out_se[!(out_se$Coefficients %in% c("(Intercept)", cv)), -2]
   }
   
-  out <- list(coefficients = out_estimate, str.errors = out_se, p.values = out_pvalue)
+  out <- list(coefficients = out_estimate, p.values = out_pvalue, str.errors = out_se)
+  return(out)
+}
+
+# refactor functions for modular_report ----
+.get_col <- function(input, col) {
+  out <- input[input$col == col,]
+  out <- tidyr::pivot_wider(out, names_from = mod, values_from = val)
+  out <- out[,-2]
   return(out)
 }
