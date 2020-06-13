@@ -1,12 +1,12 @@
 # modular_regressions ----
-modular_regressions <- function(type = "glm", fam = "gaussian", dv, cv = NULL, iv, mv, fe = NULL, robust_type = 0, var_cluster = NULL, data, show = TRUE, show_cv = FALSE) {
+modular_regressions <- function(type = "glm", fam = "gaussian", dv, cv = NULL, iv, mv, fe = NULL, robust_type = 0, var_cluster = NULL, data, full_model = TRUE, show = TRUE, show_cv = FALSE) {
   
   if (type == "glm") {
-    model_parameters <- list(dv = dv, cv = cv, iv = iv, mv = mv, data = data)
+    model_parameters <- list(dv = dv, cv = cv, iv = iv, mv = mv, data = data, full_model = full_model)
     class(model_parameters) <- c("param_glm", class(model_parameters))
     attr(model_parameters, "family") <- fam
   } else if (type == "glmer") {
-    model_parameters <- list(dv = dv, cv = cv, iv = iv, mv = mv, fe = fe, data = data)
+    model_parameters <- list(dv = dv, cv = cv, iv = iv, mv = mv, fe = fe, data = data, full_model = full_model)
     class(model_parameters) <- c("param_glmer", class(model_parameters))
     attr(model_parameters, "family") <- fam
   }
@@ -45,26 +45,10 @@ modular_models.param_glm <- function(parameters, ...) {
     cv <- 1
   }
   
+  out <- vector(mode = "list", length = 3 + length(mv) * 2)
   form_cv <- formula(paste0(dv, "~", paste0(cv, collapse = "+")))
-  form_iv <- formula(paste0(dv, "~", paste0(cv, collapse = "+"), "+", iv))
-  
-  cnt_mod <- 3 + length(mv) * 2
-  out <- vector(mode = "list", length = cnt_mod)
-  
   out[[1]] <- glm(formula = form_cv, data = data, family = attr(parameters, "family"))
-  out[[2]] <- update(out[[1]], formula. = form_iv)
-  
-  for (i in seq(length(mv))) {
-    j <- i * 2 + 1
-    form_mv <- formula(paste0(dv, "~", paste0(cv, collapse = "+"), "+", iv, "+", mv[i]))
-    out[[j]] <- update(out[[1]], formula. = form_mv)
-    j <- j + 1
-    form_mv <- formula(paste0(dv, "~", paste0(cv, collapse = "+"), "+", iv, "+", mv[i], "+", paste0(c(iv, mv[i]), collapse = ":")))
-    out[[j]] <- update(out[[1]], formula. = form_mv)
-  }
-  
-  form_full <- formula(paste0(dv, "~", paste0(cv, collapse = "+"), "+", iv, "+", paste0(mv, collapse = "+"), "+", .paste1(element1 = iv, element2 = mv, sep = ":", collapse = "+")))
-  out[[cnt_mod]] <- update(out[[1]], formula. = form_full)
+  out <- .get_models(input = out, dv = dv, cv = cv, iv = iv, mv = mv, full_model = full_model)
   
   return(out)
 }
@@ -84,32 +68,39 @@ modular_models.param_glmer <- function(parameters, ...) {
     cv <- fe
   }
   
+  out <- vector(mode = "list", length = 3 + length(mv) * 2)
   form_cv <- formula(paste0(dv, "~", paste0(cv, collapse = "+")))
-  form_iv <- formula(paste0(dv, "~", paste0(cv, collapse = "+"), "+", iv))
-  
-  cnt_mod <- 3 + length(mv) * 2
-  out <- vector(mode = "list", length = cnt_mod)
-  
   if (attr(parameters, "family") == "gaussian") {
     out[[1]] <- lme4::lmer(formula = form_cv, data = data)
   } else {
     out[[1]] <- lme4::glmer(formula = form_cv, data = data, fam = attr(parameters, "family"))
   }
+  out <- .get_models(input = out, dv = dv, cv = cv, iv = iv, mv = mv, full_model = full_model)
+  
+  return(out)
+}
+
+# refactor functions for modular_model ----
+.get_models <- function(input, dv, cv, iv, mv, full_model) {
+  out <- input
+  form_iv <- formula(paste0(dv, "~", paste0(cv, collapse = "+"), "+", iv))
   out[[2]] <- update(out[[1]], formula. = form_iv)
   
   for (i in seq(length(mv))) {
     j <- i * 2 + 1
     form_mv <- formula(paste0(dv, "~", paste0(cv, collapse = "+"), "+", iv, "+", mv[i]))
     out[[j]] <- update(out[[1]], formula. = form_mv)
-    
     j <- j + 1
     form_mv <- formula(paste0(dv, "~", paste0(cv, collapse = "+"), "+", iv, "+", mv[i], "+", paste0(c(iv, mv[i]), collapse = ":")))
     out[[j]] <- update(out[[1]], formula. = form_mv)
   }
   
-  form_full <- formula(paste0(dv, "~", paste0(cv, collapse = "+"), "+", iv, "+", paste0(mv, collapse = "+"), "+", .paste1(element1 = iv, element2 = mv, sep = ":", collapse = "+")))
-  out[[cnt_mod]] <- update(out[[1]], formula. = form_full)
-  
+  if (full_model) {
+    form_full <- formula(paste0(dv, "~", paste0(cv, collapse = "+"), "+", iv, "+", paste0(mv, collapse = "+"), "+", .paste1(element1 = iv, element2 = mv, sep = ":", collapse = "+")))
+    out[[length(out)]] <- update(out[[1]], formula. = form_full)
+  } else {
+    out <- out[-length(out)]  
+  }
   return(out)
 }
 
