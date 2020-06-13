@@ -1,7 +1,7 @@
 Package: helpR
 Type: Package
 Title: Little helpers
-Version: 0.1.2
+Version: 0.1.1
 Authors@R: person("Harald", "Puhr", role = c("aut", "cre"), email = "harald.puhr@gmail.com")
 Author: Harald Puhr [aut, cre]
 Maintainer: Harald Puhr <harald.puhr@gmail.com>
@@ -15,6 +15,7 @@ Imports:
 	ggplot2,
 	insight,
 	interplot,
+	janitor,
 	knitr,
 	lme4,
 	lmtest,
@@ -25,7 +26,5 @@ Imports:
 	purrr,
 	tidyr
 Suggests:
-	janitor,
-	knitr,
     stargazer,
     tibble

@@ -51,14 +51,3 @@ create_data <- function(n = 1000) {
   
   return(data_value)
 }
-
-clean_names <- function(data) {
-	
-	# run clean_names ----
-  if (requireNamespace("tibble", quietly = TRUE)) {
-    out <- janitor::clean_names(data)
-	return(out)
-  } else {
-    warning("'clean_names' requires the 'jantitor' package!")
-  }
-}
