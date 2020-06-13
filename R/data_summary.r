@@ -40,6 +40,18 @@ data_summary.grouped_df <- function(input, at, show = TRUE, ...) {
   }
 }
 
+# data_summary numeric, logical, character and factor method ----
+data_summary.numeric <- data_summary.logical <- data_summary.character <- data_summary.factor <- function(input, show = TRUE, ...) {
+  input <- as.data.frame(input)
+  out <- data_summary(input = input, at = "input", show = FALSE)
+  
+  if (show) {
+    .print_data_summary(input = out)
+  } else {
+    return(out)
+  }
+}
+
 # .get_summary generic function ----
 .get_summary <- function(input, ...) UseMethod(".get_summary", input)
 
