@@ -25,7 +25,7 @@ model_summary.mod_vcov <- function(input, show = TRUE, ...) {
   
   # prepare output ----
   if (show) {
-    print(input = out)
+    print(x = out)
   } else {
     if (requireNamespace("tibble", quietly = TRUE)) {
       out <- tibble::as_tibble(out)
@@ -42,7 +42,7 @@ model_summary.lm <- model_summary.glm <- function(input, type = 0, var_cluster =
   
   # prepare output ----
   if (show) {
-    print(input = out)
+    print(x = out)
   } else {
     if (requireNamespace("tibble", quietly = TRUE)) {
       out <- tibble::as_tibble(out)
@@ -88,7 +88,7 @@ model_summary.lmerMod <- model_summary.glmerMod <- function(input, randfe = FALS
   # prepare output ----
   if (show) {
     if (!randfe) {
-      print(input = out)
+      print(x = out)
     } else {
       purrr::map(list(Variables = out, RandFE = out_randfe), print)
     }
@@ -109,33 +109,33 @@ model_summary.lmerMod <- model_summary.glmerMod <- function(input, randfe = FALS
 }
 
 # print model_summary method ----
-print.model_summary <- function(input, ...) {
+print.model_summary <- function(x, ...) {
   
   # prepate data ----
-  input$sig <- ""
-  input$sig[input$p_value <= 0.1] <- "."
-  input$sig[input$p_value <= 0.05] <- "*"
-  input$sig[input$p_value <= 0.01] <- "**"
-  input$sig[input$p_value <= 0.001] <- "***"
+  x$sig <- ""
+  x$sig[x$p_value <= 0.1] <- "."
+  x$sig[x$p_value <= 0.05] <- "*"
+  x$sig[x$p_value <= 0.01] <- "**"
+  x$sig[x$p_value <= 0.001] <- "***"
 
   if (requireNamespace("knitr", quietly = TRUE)) {
-    knitr::kable(input, digits = 3)
+    knitr::kable(x, digits = 3)
   } else {
-    input$Estimate <- round(input$Estimate, digits = 3)
-    input$Std_Error <- round(input$Std_Error, digits = 3)
-    input$t_value <- round(input$t_value, digits = 3)
-    input$p_value <- round(input$p_value, digits = 3)
-    print(input)
+    x$Estimate <- round(x$Estimate, digits = 3)
+    x$Std_Error <- round(x$Std_Error, digits = 3)
+    x$t_value <- round(x$t_value, digits = 3)
+    x$p_value <- round(x$p_value, digits = 3)
+    print(x)
   }
 }
 
 
 # print model_randfe method ----
-print.model_randfe <- function(input, ...) {
+print.model_randfe <- function(x, ...) {
   if (requireNamespace("knitr", quietly = TRUE)) {
-    knitr::kable(input, digits = 3)
+    knitr::kable(x, digits = 3)
   } else {
-    input$Estimate <- round(input$Estimate, digits = 3)
-    print(input)
+    x$Estimate <- round(x$Estimate, digits = 3)
+    print(x)
   }
 }
