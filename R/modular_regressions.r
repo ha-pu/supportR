@@ -10,20 +10,35 @@ modular_regressions <- function(type = "glm", fam = "gaussian", dv, cv = NULL, i
     class(model_parameters) <- c("param_glmer", class(model_parameters))
     attr(model_parameters, "family") <- fam
   }
-  
+
   out <- modular_models(parameters = model_parameters)
-  
+
   if (robust_type != 0) {
     var_cluster <- as.data.frame(data)[,var_cluster]
   }
   
   out <- modular_report(model_list = out, cv = cv, show_cv = show_cv, robust_type = robust_type, var_cluster = var_cluster)
-  
+
   if (show) {
-    if (requireNamespace("knitr", quietly = TRUE)) {
-      lapply(out, function(x) knitr::kable(x, digits = 3))
+    if (requireNamespace("stargazer", quietly = TRUE)) {
+      if (show_cv) {
+        std_errors <- vector(mode = "list", length = ncol(out$std.errors) - 1)
+        for (i in seq(ncol(out$std.errors) - 1)) {
+          std_errors[[i]] <- na.omit(as.data.frame(out$std.errors)[,i + 1])
+        }
+        stargazer::stargazer(out$models, se = std_errors, type = "text", report = "vc*p", model.numbers = FALSE, intercept.bottom = FALSE, single.row = TRUE)
+      } else {
+        warning("Stargazer output requires 'show_cv' == TRUE!")
+        if (requireNamespace("knitr", quietly = TRUE)) {
+          lapply(out[-4], function(x) knitr::kable(x, digits = 3))
+        } else {
+          lapply(out[-4], print)
+        }
+      }
+    } else if (requireNamespace("knitr", quietly = TRUE)) {
+      lapply(out[-4], function(x) knitr::kable(x, digits = 3))
     } else {
-      lapply(out, print)
+      lapply(out[-4], print)
     }
   } else {
     return(out)
@@ -40,7 +55,7 @@ modular_models.param_glm <- function(parameters, ...) {
   iv <- parameters$iv
   mv <- parameters$mv
   data <- parameters$data
-  
+
   if (is.null(cv)) {
     cv <- 1
   }
@@ -67,7 +82,7 @@ modular_models.param_glm <- function(parameters, ...) {
   } else {
     out <- out[-length(out)]  
   }
-  
+
   return(out)
 }
 
@@ -116,30 +131,6 @@ modular_models.param_glmer <- function(parameters, ...) {
   return(out)
 }
 
-# refactor functions for modular_model ----
-.get_models <- function(input, dv, cv, iv, mv, full_model, parameters) {
-  out <- input
-  form_iv <- formula(paste0(dv, "~", paste0(cv, collapse = "+"), "+", iv))
-  out[[2]] <- update(out[[1]], formula. = form_iv)
-  
-  for (i in seq(length(mv))) {
-    j <- i * 2 + 1
-    form_mv <- formula(paste0(dv, "~", paste0(cv, collapse = "+"), "+", iv, "+", mv[i]))
-    out[[j]] <- update(out[[1]], formula. = form_mv)
-    j <- j + 1
-    form_mv <- formula(paste0(dv, "~", paste0(cv, collapse = "+"), "+", iv, "+", mv[i], "+", paste0(c(iv, mv[i]), collapse = ":")))
-    out[[j]] <- update(out[[1]], formula. = form_mv)
-  }
-  
-  if (full_model) {
-    form_full <- formula(paste0(dv, "~", paste0(cv, collapse = "+"), "+", iv, "+", paste0(mv, collapse = "+"), "+", .paste1(element1 = iv, element2 = mv, sep = ":", collapse = "+")))
-    out[[length(out)]] <- update(out[[1]], formula. = form_full)
-  } else {
-    out <- out[-length(out)]  
-  }
-  return(out)
-}
-
 # modular_report function ----
 modular_report <- function(model_list, cv, show_cv, robust_type, var_cluster) {
   out <- lapply(seq(length(model_list)), function(x) {
@@ -158,10 +149,11 @@ modular_report <- function(model_list, cv, show_cv, robust_type, var_cluster) {
   if (!show_cv) {
     out_estimate <- out_estimate[!(out_estimate$Variables %in% c("(Intercept)", cv)), -2]
     out_pvalue <- out_pvalue[!(out_pvalue$Variables %in% c("(Intercept)", cv)), -2]
-	out_se <- out_se[!(out_se$Variables %in% c("(Intercept)", cv)), -2]
+	  out_se <- out_se[!(out_se$Variables %in% c("(Intercept)", cv)), -2]
+	  model_list <- model_list[-1]
   }
   
-  out <- list(coefficients = out_estimate, p.values = out_pvalue, std.errors = out_se)
+  out <- list(coefficients = out_estimate, p.values = out_pvalue, std.errors = out_se, models = model_list)
   return(out)
 }
 
