@@ -15,7 +15,6 @@ Imports:
     ggplot2,
     insight,
     interplot,
-    knitr,
     lme4,
     lmtest,
     margins,
