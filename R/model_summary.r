@@ -109,7 +109,7 @@ model_summary.lmerMod <- model_summary.glmerMod <- function(input, randfe = FALS
 }
 
 # print model_summary method ----
-print.model_summary <- function(input) {
+print.model_summary <- function(input, ...) {
   
   # prepate data ----
   input$sig <- ""
@@ -131,7 +131,7 @@ print.model_summary <- function(input) {
 
 
 # print model_randfe method ----
-print.model_randfe <- function(input) {
+print.model_randfe <- function(input, ...) {
   if (requireNamespace("knitr", quietly = TRUE)) {
     knitr::kable(input, digits = 3)
   } else {
