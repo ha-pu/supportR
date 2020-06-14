@@ -15,7 +15,7 @@ model_summary.mod_vcov <- function(input, show = TRUE, ...) {
   p_value <- 2 * pt(-abs(t_value), df = model$df.residual)
   
   # export data ----
-  out <- data.frame(Coefficients = names(coef),
+  out <- data.frame(Variables = names(coef),
                     Estimate = coef,
                     Std_Error = se,
                     t_value,
@@ -60,7 +60,7 @@ model_summary.lmerMod <- model_summary.glmerMod <- function(input, randfe = FALS
   se <- sqrt(Matrix::diag(vcov(input)))
   t_value <- coef / se
   p_value <- 2 * pt(-abs(t_value), df = nrow(input@frame) - 1)
-  out <- data.frame(Coefficients = name,
+  out <- data.frame(Variables = name,
                     Estimate = coef,
                     Std_Error = se,
                     t_value,
@@ -90,7 +90,7 @@ model_summary.lmerMod <- model_summary.glmerMod <- function(input, randfe = FALS
     if (!randfe) {
       print(input = out)
     } else {
-      purrr::map(list(Coefficients = out, RandFE = out_randfe), print)
+      purrr::map(list(Variables = out, RandFE = out_randfe), print)
     }
   } else {
     if (requireNamespace("tibble", quietly = TRUE)) {
@@ -102,7 +102,7 @@ model_summary.lmerMod <- model_summary.glmerMod <- function(input, randfe = FALS
     if (!randfe) {
       return(out)
     } else {
-      out <- list(Coefficients = out, RandFE = out_randfe)
+      out <- list(Variables = out, RandFE = out_randfe)
       return(out)
     }
   }
