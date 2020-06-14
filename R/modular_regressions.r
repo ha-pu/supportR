@@ -125,7 +125,7 @@ modular_report <- function(model_list, cv, show_cv, robust_type, var_cluster) {
 	out_se <- out_se[!(out_se$Variables %in% c("(Intercept)", cv)), -2]
   }
   
-  out <- list(coefficients = out_estimate, p.values = out_pvalue, str.errors = out_se)
+  out <- list(coefficients = out_estimate, p.values = out_pvalue, std.errors = out_se)
   return(out)
 }
 
