@@ -11,21 +11,21 @@ Encoding: UTF-8
 LazyData: false
 Imports:
     correlation,
-	dplyr,
-	ggplot2,
-	insight,
-	interplot,
-	knitr,
-	lme4,
-	lmtest,
-	margins,
-	Matrix,
-	multiwayvcov,
-	parameters,
-	purrr,
-	tidyr
+    dplyr,
+    ggplot2,
+    insight,
+    interplot,
+    knitr,
+    lme4,
+    lmtest,
+    margins,
+    Matrix,
+    multiwayvcov,
+    parameters,
+    purrr,
+    tidyr
 Suggests:
-	janitor,
-	knitr,
+    janitor,
+    knitr,
     stargazer,
     tibble
