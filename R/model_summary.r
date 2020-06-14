@@ -2,7 +2,7 @@
 model_summary <- function(input, ...) UseMethod("model_summary", input)
 
 # model_summary mod_vcov method ----
-model_summary.mod_vcov <- function(input, show = TRUE, ...) {
+model_summary.mod_vcov <- function(input, show = TRUE, stargazer = FALSE, ...) {
   
   # get data ----
   model <- input$model
@@ -24,10 +24,15 @@ model_summary.mod_vcov <- function(input, show = TRUE, ...) {
   class(out) <- c("model_summary", class(out))
   
   # prepare output ----
+  if (show & stargazer) {
+    warning("'show' == TRUE overrules 'stargazer' == TRUE")
+  }
   if (show) {
     print(x = out)
   } else {
-    if (requireNamespace("tibble", quietly = TRUE)) {
+    if (stargazer) {
+      out <- list(model, out$se)
+    } else if (requireNamespace("tibble", quietly = TRUE)) {
       out <- tibble::as_tibble(out)
     }
     return(out)
@@ -35,16 +40,21 @@ model_summary.mod_vcov <- function(input, show = TRUE, ...) {
 }
 
 # model_summary lm and glm method ----
-model_summary.lm <- model_summary.glm <- function(input, type = 0, var_cluster = NULL, show = TRUE, ...) {
+model_summary.lm <- model_summary.glm <- function(input, type = 0, var_cluster = NULL, show = TRUE, stargazer = FALSE, ...) {
   out <- model_vcov(model = input, type = type, var_cluster = var_cluster)
   out <- model_summary(input = out, show = FALSE)
   class(out) <- c("model_summary", class(out))
   
   # prepare output ----
+  if (show & stargazer) {
+    warning("'show' == TRUE overrules 'stargazer' == TRUE")
+  }
   if (show) {
     print(x = out)
   } else {
-    if (requireNamespace("tibble", quietly = TRUE)) {
+    if (stargazer) {
+      out <- list(model, out$se)
+    } else if (requireNamespace("tibble", quietly = TRUE)) {
       out <- tibble::as_tibble(out)
     }
     return(out)
@@ -52,7 +62,7 @@ model_summary.lm <- model_summary.glm <- function(input, type = 0, var_cluster =
 }
 
 # model_summary lmer and glmer method ----
-model_summary.lmerMod <- model_summary.glmerMod <- function(input, randfe = FALSE, show = TRUE, ...) {
+model_summary.lmerMod <- model_summary.glmerMod <- function(input, randfe = FALSE, show = TRUE, stargazer = FALSE, ...) {
   
   # compute se and p-values ----
   name <- attributes(input@pp$X)$dimnames[[2]]
@@ -86,6 +96,9 @@ model_summary.lmerMod <- model_summary.glmerMod <- function(input, randfe = FALS
   
   
   # prepare output ----
+  if (show & stargazer) {
+    warning("'show' == TRUE overrules 'stargazer' == TRUE")
+  }
   if (show) {
     if (!randfe) {
       print(x = out)
@@ -93,7 +106,9 @@ model_summary.lmerMod <- model_summary.glmerMod <- function(input, randfe = FALS
       purrr::map(list(Variables = out, RandFE = out_randfe), print)
     }
   } else {
-    if (requireNamespace("tibble", quietly = TRUE)) {
+    if (stargazer) {
+      out <- list(model, out$se)
+    } else if (requireNamespace("tibble", quietly = TRUE)) {
       out <- tibble::as_tibble(out)
       if (randfe) {
         out_randfe <- tibble::as_tibble(out_randfe)
@@ -101,6 +116,9 @@ model_summary.lmerMod <- model_summary.glmerMod <- function(input, randfe = FALS
     }
     if (!randfe) {
       return(out)
+	} else if (stargazer & randfe) {
+	  return(out)
+	  warning("'stargazer' == TRUE overrules 'randfe' == TRUE")
     } else {
       out <- list(Variables = out, RandFE = out_randfe)
       return(out)
