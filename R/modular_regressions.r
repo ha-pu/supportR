@@ -48,7 +48,7 @@ modular_models.param_glm <- function(parameters, ...) {
   out <- vector(mode = "list", length = 3 + length(mv) * 2)
   form_cv <- formula(paste0(dv, "~", paste0(cv, collapse = "+")))
   out[[1]] <- glm(formula = form_cv, data = data, family = attr(parameters, "family"))
-  out <- .get_models(input = out, dv = dv, cv = cv, iv = iv, mv = mv, full_model = full_model)
+  out <- .get_models(input = out, dv = dv, cv = cv, iv = iv, mv = mv, full_model = parameters$full_model)
   
   return(out)
 }
@@ -75,7 +75,7 @@ modular_models.param_glmer <- function(parameters, ...) {
   } else {
     out[[1]] <- lme4::glmer(formula = form_cv, data = data, fam = attr(parameters, "family"))
   }
-  out <- .get_models(input = out, dv = dv, cv = cv, iv = iv, mv = mv, full_model = full_model)
+  out <- .get_models(input = out, dv = dv, cv = cv, iv = iv, mv = mv, full_model = parameters$full_model)
   
   return(out)
 }
