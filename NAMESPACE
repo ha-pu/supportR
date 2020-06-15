@@ -1,6 +1,6 @@
 exportPattern("^[[:alpha:]]+")
 importFrom("graphics", "rug")
-importFrom("stats", "formula", "glm", "median", "pt", "quantile", "rbinom", "rnorm", "runif", "sd", "update", "vcov")
+importFrom("stats", "formula", "glm", "median", "na.omit", "pt", "quantile", "rbinom", "rnorm", "runif", "sd", "update", "vcov")
 S3method("data_summary", "data.frame")
 S3method("data_summary", "grouped_df")
 S3method("data_summary", "numeric")
