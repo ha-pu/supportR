@@ -11,13 +11,13 @@ modular_regressions <- function(type = "glm", fam = "gaussian", dv, cv = NULL, i
     attr(model_parameters, "family") <- fam
   }
 
-  out <- modular_models(parameters = model_parameters)
+  out <- .modular_models(parameters = model_parameters)
 
   if (robust_type != 0) {
     var_cluster <- as.data.frame(data)[,var_cluster]
   }
   
-  out <- modular_report(model_list = out, cv = cv, show_cv = show_cv, robust_type = robust_type, var_cluster = var_cluster)
+  out <- .modular_report(model_list = out, cv = cv, show_cv = show_cv, robust_type = robust_type, var_cluster = var_cluster)
 
   if (show) {
     if (requireNamespace("stargazer", quietly = TRUE)) {
@@ -45,11 +45,11 @@ modular_regressions <- function(type = "glm", fam = "gaussian", dv, cv = NULL, i
   }
 }
 
-# modular_models generic function ----
-modular_models <- function(parameters, ...)  UseMethod("modular_models", parameters)
+# .modular_models generic function [helper] ----
+.modular_models <- function(parameters, ...)  UseMethod(".modular_models", parameters)
 
-# modular_models param_glm method ----
-modular_models.param_glm <- function(parameters, ...) {
+# .modular_models param_glm method ----
+.modular_models.param_glm <- function(parameters, ...) {
   dv <- parameters$dv
   cv <- parameters$cv
   iv <- parameters$iv
@@ -86,8 +86,8 @@ modular_models.param_glm <- function(parameters, ...) {
   return(out)
 }
 
-# modular_models param_glmer method ----
-modular_models.param_glmer <- function(parameters, ...) {
+# .modular_models param_glmer method ----
+.modular_models.param_glmer <- function(parameters, ...) {
   dv <- parameters$dv
   cv <- parameters$cv
   iv <- parameters$iv
@@ -131,8 +131,8 @@ modular_models.param_glmer <- function(parameters, ...) {
   return(out)
 }
 
-# modular_report function ----
-modular_report <- function(model_list, cv, show_cv, robust_type, var_cluster) {
+# .modular_report [helper] ----
+.modular_report <- function(model_list, cv, show_cv, robust_type, var_cluster) {
   out <- lapply(seq(length(model_list)), function(x) {
     out <- model_summary(input = model_list[[x]], type = robust_type, var_cluster = var_cluster, show = FALSE)
     out$mod <- paste0("mod_", x)
@@ -157,7 +157,7 @@ modular_report <- function(model_list, cv, show_cv, robust_type, var_cluster) {
   return(out)
 }
 
-# refactor functions for modular_report ----
+# refactor functions for .modular_report ----
 .get_col <- function(input, col) {
   out <- input[input$col == col,]
   out <- tidyr::pivot_wider(out, names_from = mod, values_from = val)
