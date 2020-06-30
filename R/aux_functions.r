@@ -64,7 +64,7 @@ clean_names <- function(data) {
   }
 }
 
-# data_summary generic function ----
+# standardize_data generic function ----
 standardize_data <- function(data, center = TRUE, scale = TRUE, ...) UseMethod("standardize_data", data)
 
 # standardize_data data.frame method ----
@@ -91,4 +91,11 @@ standardize_data.data.frame <- function(data, center = TRUE, scale = TRUE) {
   }
 
   return(out)	
+}
+
+# logit_to_prob ----
+logit_to_prob <- function(logit){
+  odds <- exp(logit)
+  prob <- odds / (1 + odds)
+  return(prob)
 }
