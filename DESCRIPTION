@@ -1,11 +1,11 @@
-Package: helpR
+Package: supportR
 Type: Package
-Title: Little helpers
+Title: Helpful supporters
 Version: 0.1.2
 Authors@R: person("Harald", "Puhr", role = c("aut", "cre"), email = "harald.puhr@gmail.com")
 Author: Harald Puhr [aut, cre]
 Maintainer: Harald Puhr <harald.puhr@gmail.com>
-Description: The package consists of various little helper functions.
+Description: The package provides of various helper functions.
 License:  MIT
 Encoding: UTF-8
 LazyData: false
