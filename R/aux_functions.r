@@ -68,7 +68,7 @@ clean_names <- function(data) {
 standardize_data <- function(data, center = TRUE, scale = TRUE, ...) UseMethod("standardize_data", data)
 
 # standardize_data data.frame method ----
-standardize_data.data.frame <- function(data, center = TRUE, scale = TRUE) {
+standardize_data.data.frame <- function(data, center = TRUE, scale = TRUE, ...) {
 	
   # run checks ----
   if (!is.logical(center)) {
