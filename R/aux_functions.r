@@ -34,13 +34,13 @@ create_data <- function(n = 1000) {
   data_value$firm_value[data_value$industry == "A"] <- data_value$firm_value[data_value$industry == "A"] + runif(1, 0, 0.2)
   data_value$firm_value[data_value$industry == "B"] <- data_value$firm_value[data_value$industry == "B"] + runif(1, -0.1, 0.1)
   data_value$firm_value[data_value$industry == "C"] <- data_value$firm_value[data_value$industry == "C"] - runif(1, -0.1, 0.1)
-  data_value$firm_value[data_value$industry == "D"] <- data_value$firm_value[data_value$industry == "D"] - runif(1, -0.2, 0)
+  data_value$firm_value[data_value$industry == "D"] <- data_value$firm_value[data_value$industry == "D"] - runif(1, 0, 0.2)
   
   data_value$country = sample(c("A", "B", "C", "D"), n, replace = TRUE)
   data_value$firm_value[data_value$country == "A"] <- data_value$firm_value[data_value$country == "A"] + runif(1, 0, 0.2)
   data_value$firm_value[data_value$country == "B"] <- data_value$firm_value[data_value$country == "B"] + runif(1, -0.1, 0.1)
   data_value$firm_value[data_value$country == "C"] <- data_value$firm_value[data_value$country == "C"] - runif(1, -0.1, 0.1)
-  data_value$firm_value[data_value$country == "D"] <- data_value$firm_value[data_value$country == "D"] - runif(1, -0.2, 0)
+  data_value$firm_value[data_value$country == "D"] <- data_value$firm_value[data_value$country == "D"] - runif(1, 0, 0.2)
   
   data_value$firm_value <- data_value$firm_value + rnorm(n)
   
