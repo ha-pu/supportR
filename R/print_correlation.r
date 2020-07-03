@@ -89,7 +89,7 @@ print_correlation <- function(data, print = TRUE, html = FALSE) {
   }
   
   if (html) {
-    out <- stargazer::stargazer(object, type = "html", summary = FALSE)
+    out <- stargazer::stargazer(object, type = "html", summary = FALSE, rownames = FALSE)
     out <- gsub("\\* ", "*", out)
     return(out)
   } else {
