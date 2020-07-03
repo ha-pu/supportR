@@ -20,8 +20,7 @@ print_correlation <- function(data, print = TRUE, html = FALSE) {
         warning("html == TRUE requires 'stargazer' package!")
       }
     } else if (print) {
-      out <- .do_print_correlation(object = out)
-      print(out)
+      .do_print_correlation(object = out)
     } else {
       return(cor)
     }
@@ -92,10 +91,10 @@ print_correlation <- function(data, print = TRUE, html = FALSE) {
   if (html) {
     out <- stargazer::stargazer(object, type = "html", summary = FALSE)
     out <- gsub("\\* ", "*", out)
+    return(out)
   } else {
-    out <- cat(insight::format_table(object))
+    cat(insight::format_table(object))
   }
-  return(out)
 }
 
 # .get_matrix [helper] function ----
