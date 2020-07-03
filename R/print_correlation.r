@@ -1,25 +1,25 @@
 # print_correlation function ----
-print_correlation <- function(data, print = TRUE, html = FALSE) {
+print_correlation <- function(data, show = TRUE, html = FALSE) {
   
   if ("data.frame" %in% class(data) | "tbl_df" %in% class(data)) {
     # run correlation ----
     cor <- correlation::correlation(data)
     
     # do summary ----
-    if (print | html) {
+    if (show | html) {
       out <- .do_summary_correlation(object = cor)
     }
     
     # return output ----
     if(html) {
       if (requireNamespace("stargazer", quietly = TRUE)) {
-        if (!print) warning("html == TRUE overrules print == FALSE!")
+        if (!show) warning("html == TRUE overrules show == FALSE!")
         out <- .do_print_correlation(object = out, html = TRUE)
         return(out)
       } else {
         warning("html == TRUE requires 'stargazer' package!")
       }
-    } else if (print) {
+    } else if (show) {
       .do_print_correlation(object = out)
     } else {
       return(cor)
