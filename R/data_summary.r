@@ -35,12 +35,15 @@ data_summary.data.frame <- function(input, at, show = TRUE, ...) {
 
 # data_summary grouped_df method ----
 data_summary.grouped_df <- function(input, at, show = TRUE, ...) {
+  if (ncol(attr(input,"groups")) > 2) {
+    warning("'data_summary' uses only the first group for clustering!")
+  }
   out <- lapply(attr(input, "groups")$.rows, function(x) {
     out <- data_summary(input = dplyr::ungroup(input[x,]), at = at, show = FALSE)
     return(out)
   })
   out <- dplyr::bind_rows(out)
-  out$Cluster <- paste(names(attr(input,"groups"))[1], as.data.frame(attr(input,"groups"))[,1], sep = ": ")
+  out$Cluster <- paste(names(attr(input,"groups"))[[1]], rep(as.data.frame(attr(input,"groups"))[,1], each = length(at)), sep = ": ")
   out <- out[,c("Variable", "Cluster", stat)]
   out <- out[order(out$Variable, out$Cluster),]
 
@@ -129,7 +132,7 @@ stat <- c("Type", "n", "SD", "Min.", "1st Qu.", "Mean", "Median", "3rd Qu.", "Ma
 
 .print_data_summary <- function(input) {
   if (requireNamespace("knitr", quietly = TRUE)) {
-    knitr::kable(input, digits = 3)
+    knitr::kable(input, digits = 3, row.names = FALSE)
   } else {
     input[,stat] <- round(input[,stat], digits = 3)
     print(input)
