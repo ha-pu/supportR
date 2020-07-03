@@ -132,7 +132,7 @@ stat <- c("Type", "n", "SD", "Min.", "1st Qu.", "Mean", "Median", "3rd Qu.", "Ma
 
 .print_data_summary <- function(input) {
   if (requireNamespace("knitr", quietly = TRUE)) {
-    knitr::kable(input, digits = 3, row.names = FALSE)
+    knitr::kable(input, digits = 3)
   } else {
     input[,stat] <- round(input[,stat], digits = 3)
     print(input)
