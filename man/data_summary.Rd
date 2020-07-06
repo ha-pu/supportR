@@ -65,7 +65,7 @@
 }
 
 \value{
-  Summary statistics for the data provided as \code{"input"} and the variables selected in \code{at}. When the option \code{show} is set to \code{TRUE} the output is printed to the console. If the package \code{knitr} is available, the output is printed using \code{knitr::kable}. When \code{show} is set to \code{TRUE} the output is returned as \code{data.frame}.
+  Summary statistics for the data provided as \code{"input"} and the variables selected in \code{at}. When the option \code{show} is set to \code{TRUE} the output is printed to the console. If the package \code{knitr} is available, the output is printed using \code{knitr::kable}. When \code{show} is set to \code{FALSE} the output is returned as \code{data.frame} or \code{tibble} (when package \code{tibble} is available).
 }
 
 \examples{
