@@ -50,6 +50,9 @@ data_summary.grouped_df <- function(input, at, show = TRUE, ...) {
   if (show) {
     .print_data_summary(input = out)
   } else {
+    if (requireNamespace("tibble", quietly = TRUE)) {
+      out <- tibble::as_tibble(out)
+	}
     return(out)
   }
 }
