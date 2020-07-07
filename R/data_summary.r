@@ -12,7 +12,7 @@ data_summary.data.frame <- function(input, at, show = TRUE, ...) {
   }
   if (is.character(at)) {
     input <- as.data.frame(input)
-    out <- lapply(at, function(x) .get_summary(input[,x]))
+    out <- lapply(at, function(x) .hlpr_get_summary(input[,x]))
     out <- cbind.data.frame(out)
     colnames(out) <- at
     out$Statistic <- stat
@@ -24,7 +24,7 @@ data_summary.data.frame <- function(input, at, show = TRUE, ...) {
     out[,stat[-1]] <- sapply(out[,stat[-1]], as.numeric)
 
     if (show) {
-      .print_data_summary(input = out)
+      .hlpr_print_summary(input = out)
     } else {
       return(out)
     }
@@ -48,7 +48,7 @@ data_summary.grouped_df <- function(input, at, show = TRUE, ...) {
   out <- out[order(out$Variable, out$Cluster),]
 
   if (show) {
-    .print_data_summary(input = out)
+    .hlpr_print_summary(input = out)
   } else {
     if (requireNamespace("tibble", quietly = TRUE)) {
       out <- tibble::as_tibble(out)
@@ -63,81 +63,10 @@ data_summary.numeric <- data_summary.logical <- data_summary.character <- data_s
   out <- data_summary(input = input, at = "input", show = FALSE)
 
   if (show) {
-    .print_data_summary(input = out)
+    .hlpr_print_summary(input = out)
   } else {
     return(out)
   }
 }
 
-# .get_summary generic function ----
-.get_summary <- function(input, ...) UseMethod(".get_summary", input)
-
-# .get_summary numeric method ----
-.get_summary.numeric <- function(input, ...) {
-  input <- input[!is.na(input)]
-  out <- c(
-    .get_stats(input),
-    NA
-  )
-  return(out)
-}
-
-# .get_summary logical method ----
-.get_summary.logical <- function(input, ...) {
-  input <- input[!is.na(input)]
-  out <- c(
-    .get_stats(input),
-    .get_uniques(input)
-  )
-  return(out)
-}
-
-# .get_summary character and factor method ----
-.get_summary.character <- .get_summary.factor <- function(input, ...) {
-  input <- input[!is.na(input)]
-  out <- c(
-    class(input),
-    length(input),
-    NA,
-    NA,
-    NA,
-    NA,
-    NA,
-    NA,
-    NA,
-    .get_uniques(input)
-  )
-  return(out)
-}
-
-# refactor functions for .get_summary ----
-.get_stats <- function(input) {
-  out <- c(
-    class(input),
-    length(input),
-    sd(input),
-    min(input),
-    quantile(input, 0.25),
-    mean(input),
-    median(input),
-    quantile(input, 0.75),
-    max(input)
-  )
-  return(out)
-}
-
-.get_uniques <- function(input) {
-  out <- length(unique(input))
-  return(out)
-}
-
 stat <- c("Type", "n", "SD", "Min.", "1st Qu.", "Mean", "Median", "3rd Qu.", "Max.", "Groups")
-
-.print_data_summary <- function(input) {
-  if (requireNamespace("knitr", quietly = TRUE)) {
-    knitr::kable(input, digits = 3)
-  } else {
-    input[,stat] <- round(input[,stat], digits = 3)
-    print(input)
-  }
-}
