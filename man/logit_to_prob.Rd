@@ -25,7 +25,6 @@
   \itemize{
     \item{\url{https://en.wikipedia.org/wiki/Logit}}
     \item{\url{https://sebastiansauer.github.io/Rcode/logit2prob.R}}
-    }
   }
 }
 

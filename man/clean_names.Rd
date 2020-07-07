@@ -25,11 +25,11 @@
 }
 
 \seealso{
-  \code{\link{janitor::clean_names}}
+  \code{\link[janitor]{clean_names}}
 }
 
 \examples{
-  data <- supportR::create_data
+  data <- supportR::create_data()
   names(data) <- gsub("_", ".", names(data))
   clean_names(data)
 }

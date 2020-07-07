@@ -28,7 +28,7 @@
 }
 
 \seealso{
-  \code{\link{base::scale}}
+  \code{\link[base]{scale}}
 }
 
 \examples{
