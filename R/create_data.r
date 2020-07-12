@@ -6,7 +6,7 @@ create_data <- function(n = 1000) {
     advertising = trunc_rnorm(n = n, mean = 97, sd = 326, lwr = 0),
     assets = trunc_rnorm(n = n, mean = 14589, sd = 98124, lwr = 0),
     county = sample(LETTERS[1:4], size = n, replace = TRUE),
-    financial = as.logical(rbinom(n = n, size = 1, prob = 0.1)),
+    soe = as.logical(rbinom(n = n, size = 1, prob = 0.1)),
     international = as.logical(rbinom(n = n, size = 1, prob = 0.1)),
     revenue = trunc_rnorm(n = n, mean = 3796, sd = 15420, lwr = 0),
     rnd = trunc_rnorm(n = n, mean = 200, sd = 752, lwr = 0),
@@ -16,7 +16,7 @@ create_data <- function(n = 1000) {
   )
   
   data_value$ebit <- -296 + rnorm(n = n, mean = 0, sd = 500)
-  data_value$ebit <- data_value$ebit + data_value$financial * -66
+  data_value$ebit <- data_value$ebit + data_value$soe * -66
   data_value$ebit <- data_value$ebit + data_value$assets * 0.02
   data_value$ebit <- data_value$ebit + data_value$revenue * 0.06
   data_value$ebit <-  data_value$ebit + data_value$advertising * 0.77
