@@ -3,15 +3,15 @@ create_data <- function(n = 1000) {
   weights = runif(9, min = -2, max = 2)
   
   data_value <- data.frame(
-    advertising = rnorm(n = n, mean = 97, sd = 326),
-    assets = rnorm(n = n, mean = 14589, sd = 98124),
+    advertising = trunc_rnorm(n = n, mean = 97, sd = 326, lwr = 0),
+    assets = trunc_rnorm(n = n, mean = 14589, sd = 98124, lwr = 0),
     county = sample(LETTERS[1:4], size = n, replace = TRUE),
     financial = as.logical(rbinom(n = n, size = 1, prob = 0.1)),
     international = as.logical(rbinom(n = n, size = 1, prob = 0.1)),
-    revenue = rnorm(n = n, mean = 3796, sd = 15420),
-    rnd = rnorm(n = n, mean = 200, sd = 752),
+    revenue = trunc_rnorm(n = n, mean = 3796, sd = 15420, lwr = 0),
+    rnd = trunc_rnorm(n = n, mean = 200, sd = 752, lwr = 0),
     sic = as.factor(sample(0:9, size = n, replace = TRUE, prob = c(0.05, 0.1, 0.1, 0.1, 0.05, 0.05, 0.35, 0.1, 0.05, 0.05))),
-    staff = rnorm(n = n, mean = 649, sd = 2145),
+    staff = trunc_rnorm(n = n, mean = 649, sd = 2145, lwr = 0),
     stock_ownership = sample(LETTERS[1:4], size = n, replace = TRUE)
   )
   
