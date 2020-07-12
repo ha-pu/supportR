@@ -7,11 +7,11 @@ standardize_data.data.frame <- function(data, center = TRUE, scale = TRUE, ...) 
   # run checks ----
   if (!is.logical(center)) {
     center <- TRUE
-    warning("center must be a logical value! Default for center is TRUE.")
+    warning("center must be a logical value! Use default value for center TRUE.")
   }
   if (!is.logical(scale)) {
 	scale <- TRUE
-	warning("scale must be a logical value! Default for scale is TRUE.")
+	warning("scale must be a logical value! Use default value for scale TRUE.")
   }
 	
   # run standardization ----

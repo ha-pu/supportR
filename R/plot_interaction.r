@@ -8,7 +8,7 @@ plot_interaction.mod_vcov <- function(input, iv, moderator, ci = 0.9, ...) {
   if (!is.character(iv) | !is.character(moderator)) stop("iv and moderator must be character variables!")
   if (!is.numeric(ci) | ci >= 1) {
     ci <- 0.9
-    warning("ci must be a numeric value < 1! Default for ci is 0.9.")
+    warning("ci must be a numeric value < 1! Use default value for ci 0.9.")
   }
   
   # get data ----
@@ -54,7 +54,7 @@ plot_interaction.lmerMod <- plot_interaction.glmerMod <- function(input, iv, mod
   if (!is.character(iv) | !is.character(moderator)) stop("iv and moderator must be character variables!")
   if (!is.numeric(ci) | ci >= 1) {
     ci <- 0.9
-    warning("ci must be a numeric value < 1! Default for ci is 0.9.")
+    warning("ci must be a numeric value < 1! Use default value for ci 0.9.")
   }
   
   # draw plot ----

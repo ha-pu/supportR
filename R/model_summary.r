@@ -47,7 +47,7 @@ model_summary.lm <- model_summary.glm <- function(input, type = 0, var_cluster =
   
   # prepare output ----
   if (show & sg) {
-    warning("'show' == TRUE overrules 'sg' == TRUE")
+    message("'show' == TRUE overrules 'sg' == TRUE")
   }
   if (show) {
     print(x = out)
@@ -97,7 +97,7 @@ model_summary.lmerMod <- model_summary.glmerMod <- function(input, randfe = FALS
   
   # prepare output ----
   if (show & sg) {
-    warning("'show' == TRUE overrules 'sg' == TRUE")
+    message("'show' == TRUE overrules 'sg' == TRUE")
   }
   if (show) {
     if (!randfe) {
@@ -118,7 +118,7 @@ model_summary.lmerMod <- model_summary.glmerMod <- function(input, randfe = FALS
       return(out)
 	} else if (sg & randfe) {
 	  return(out)
-	  warning("'sg' == TRUE overrules 'randfe' == TRUE")
+	  message("'sg' == TRUE overrules 'randfe' == TRUE")
     } else {
       out <- list(Variables = out, RandFE = out_randfe)
       return(out)

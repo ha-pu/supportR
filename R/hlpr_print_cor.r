@@ -32,10 +32,14 @@
   }
 
   if (html) {
-    out <- stargazer::stargazer(object, type = "html", summary = FALSE, rownames = FALSE)
-    out <- gsub("\\* ", "*", out)
-    out <- cat(out, sep = "\n")
-    return(out)
+	if (requireNamespace("stargazer", quietly = TRUE)) {
+      out <- stargazer::stargazer(object, type = "html", summary = FALSE, rownames = FALSE)
+      out <- gsub("\\* ", "*", out)
+      out <- cat(out, sep = "\n")
+      return(out)
+    } else {
+      stop("html == TRUE requires 'stargazer' package!")
+    }
   } else {
     cat(insight::format_table(object))
   }

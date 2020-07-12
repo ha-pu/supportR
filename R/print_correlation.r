@@ -15,11 +15,11 @@ print_correlation.data.frame <- function(data, show = TRUE, html = FALSE, ...) {
   # return output ----
   if(html) {
     if (requireNamespace("stargazer", quietly = TRUE)) {
-      if (!show) warning("html == TRUE overrules show == FALSE!")
+      if (!show) message("html == TRUE overrules show == FALSE!")
       out <- .hlpr_print_cor(object = out, html = TRUE)
       return(out)
     } else {
-      warning("html == TRUE requires 'stargazer' package!")
+      stop("html == TRUE requires 'stargazer' package!")
     }
   } else if (show) {
     .hlpr_print_cor(object = out)
