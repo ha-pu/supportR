@@ -3,17 +3,17 @@ model_summary <- function(input, ...) UseMethod("model_summary", input)
 
 # model_summary mod_vcov method ----
 model_summary.mod_vcov <- function(input, show = TRUE, sg = FALSE, ...) {
-  
+
   # get data ----
   model <- input$model
   vcov_mat <- input$vcov_mat
-  
+
   # compute se and p-values ----
   coef <- model$coefficients
   se <- lmtest::coeftest(model, vcov_mat)[,2]
   t_value <- coef / se
   p_value <- 2 * pt(-abs(t_value), df = model$df.residual)
-  
+
   # export data ----
   out <- data.frame(Variables = names(coef),
                     Estimate = coef,
@@ -22,7 +22,7 @@ model_summary.mod_vcov <- function(input, show = TRUE, sg = FALSE, ...) {
                     p_value,
                     row.names = NULL)
   class(out) <- c("model_summary", class(out))
-  
+
   # prepare output ----
   if (show & sg) {
     warning("'show' == TRUE overrules 'sg' == TRUE")
@@ -44,7 +44,7 @@ model_summary.lm <- model_summary.glm <- function(input, type = 0, var_cluster =
   out <- model_vcov(model = input, type = type, var_cluster = var_cluster)
   out <- model_summary(input = out, show = FALSE)
   class(out) <- c("model_summary", class(out))
-  
+
   # prepare output ----
   if (show & sg) {
     warning("'show' == TRUE overrules 'sg' == TRUE")
@@ -63,7 +63,7 @@ model_summary.lm <- model_summary.glm <- function(input, type = 0, var_cluster =
 
 # model_summary lmer and glmer method ----
 model_summary.lmerMod <- model_summary.glmerMod <- function(input, randfe = FALSE, show = TRUE, sg = FALSE, ...) {
-  
+
   # compute se and p-values ----
   name <- attributes(input@pp$X)$dimnames[[2]]
   coef <- input@beta
@@ -76,8 +76,9 @@ model_summary.lmerMod <- model_summary.glmerMod <- function(input, randfe = FALS
                     t_value,
                     p_value,
                     row.names = NULL)
+
   class(out) <- c("model_summary", class(out))
-  
+
   # get random fixed effects ----
   if (randfe) {
     out_randfe <- lme4::ranef(input)
@@ -93,8 +94,8 @@ model_summary.lmerMod <- model_summary.glmerMod <- function(input, randfe = FALS
     out_randfe <- dplyr::bind_rows(out_randfe)
     class(out_randfe) <- c("model_randfe", class(out_randfe))
   }
-  
-  
+
+
   # prepare output ----
   if (show & sg) {
     warning("'show' == TRUE overrules 'sg' == TRUE")
@@ -113,12 +114,15 @@ model_summary.lmerMod <- model_summary.glmerMod <- function(input, randfe = FALS
       if (randfe) {
         out_randfe <- tibble::as_tibble(out_randfe)
       }
+    } else {
+      class(out) <- "data.frame"
+      class(out_randfe) <- "data.frame"
     }
     if (!randfe) {
       return(out)
 	} else if (sg & randfe) {
-	  return(out)
 	  warning("'sg' == TRUE overrules 'randfe' == TRUE")
+	  return(out)
     } else {
       out <- list(Variables = out, RandFE = out_randfe)
       return(out)
