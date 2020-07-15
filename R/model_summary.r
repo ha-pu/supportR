@@ -113,6 +113,9 @@ model_summary.lmerMod <- model_summary.glmerMod <- function(input, randfe = FALS
       if (randfe) {
         out_randfe <- tibble::as_tibble(out_randfe)
       }
+    } else {
+      class(out) <- "data.frame"
+      class(out_randfe) <- "data.frame"
     }
     if (!randfe) {
       return(out)
