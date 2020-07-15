@@ -20,11 +20,9 @@
 }
 
 \value{
-  \itemize{
-    \item{\code{show == TRUE & html == FALSE}}{The correlation matrix prints to the console as plain text}
-    \item{\code{show == TRUE & html == TRUE}}{The correlation matrix prints to the console as html code}
-    \item{\code{show == FALSE & html == FALSE}}{The functions returns a ctable of correlation coefficients and p-values - see \code{correlation::correlation} for further details}
-  }
+  \item{\code{show == TRUE & html == FALSE}}{The correlation matrix prints to the console as plain text}
+  \item{\code{show == TRUE & html == TRUE}}{The correlation matrix prints to the console as html code}
+  \item{\code{show == FALSE & html == FALSE}}{The functions returns a ctable of correlation coefficients and p-values - see \code{correlation::correlation} for further details}
 }
 
 \seealso{

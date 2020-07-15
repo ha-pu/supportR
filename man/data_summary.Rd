@@ -38,30 +38,26 @@
 
 \details{
   The function \code{data_summary} provides 11 columns of output for each variable selected in \code{at}:
-  \itemize{
-    \item{Variable - variable name}
-    \item{Cluster - cluster for grouping}
-    \item{Type - variable type}
-    \item{n - number of non-missing observations}
-    \item{SD - standard deviation}
-    \item{Min. - minimum}
-    \item{1st Qu. - .25 percentile}
-    \item{Mean - mean}
-    \item{Median - median, .50 percentile}
-    \item{3rd Qu. - .75 percentile}
-    \item{Max. - maximum}
-    \item{Groups - number of distinct groups represented in the variable}
-  }
+  \item{Variable}{variable name}
+  \item{Cluster}{cluster for grouping}
+  \item{Type}{variable type}
+  \item{n}{number of non-missing observations}
+  \item{SD}{standard deviation}
+  \item{Min.}{minimum}
+  \item{1st Qu.}{.25 percentile}
+  \item{Mean}{mean}
+  \item{Median}{median, .50 percentile}
+  \item{3rd Qu.}{.75 percentile}
+  \item{Max.}{maximum}
+  \item{Groups}{number of distinct groups represented in the variable}
 
   The exact output for the function depends on the data provided as \code{input}:
-  \itemize{
-    \item{\code{data.frame} - the summary is provided for each variables selected in \code{at} in a separate row, the summary statistics depend on the variable type}
-    \item{\code{grouped_df} - as for \code{data.frame} but the summary is provided for each group separately, the respective group is shown in the variable \code{Cluster}}
-    \item{\code{numeric} - all output columns except "Groups"}
-    \item{\code{logical} - all output columns}
-    \item{\code{character} - only output columns Variable, Type, n, Groups}
-    \item{\code{factor} - as for \code{character}}
-  }
+  \item{\code{data.frame}}{The summary is provided for each variables selected in \code{at} in a separate row, the summary statistics depend on the variable type}
+  \item{\code{grouped_df}}{As for \code{data.frame} but the summary is provided for each group separately, the respective group is shown in the variable \code{Cluster}}
+  \item{\code{numeric}}{All output columns except "Groups"}
+  \item{\code{logical}}{All output columns}
+  \item{\code{character}}{Only output columns Variable, Type, n, Groups}
+  \item{\code{factor}}{As for \code{character}}
 }
 
 \value{
