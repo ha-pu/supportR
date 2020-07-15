@@ -7,31 +7,30 @@
 \title{Compute model variance-covariance matrix}
 
 \description{
-  %%  ~~ A concise (1-5 lines) description of what the function does. ~~
+  The function \code{model_vcov} computes a variance-covariance matrix for a linear regression model. The user can provide a cluster variable to cluster the variance-covariance matrix and can select to use bootstraping for clustering. The output can serve as input for the \code{model_summary} and \code{plot_interaction} functions.
 }
 \usage{
-  model_vcov(model, ...)
+  model_vcov(model, type, var_cluster)
 }
 
 \arguments{
-  \item{model}{
-  %%     ~~Describe \code{model} here~~
-  }
-  \item{\dots}{
-  %%     ~~Describe \code{\dots} here~~
-  }
+  \item{model}{Linear regression model for which the variance-covariance matrix is to be computed, requires class "lm" or "glm"}
+  \item{type}{Indicator which type of variance-covariance matrix is to be computed: 0 - no clustering, 1 - clustering using \code{var_cluster}, 2 - clustering using \code{var_cluster} with bootstraping}
+  \item{var_cluster}{Vector, matrix, or data.frame containing the variables that are used for clustering}
 }
 
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+  The option \code{type == 0} uses \code{vcov} from the \code{base} package. When \code{type == 1} is selected, the variance-covariance matrix is computed using the \code{cluster.vcov} command from the \code{multiwayvcov} package: \code{multiwayvcov::cluster.vcov(model, var_cluster)}. For \code{type == 2}, the variance-covariance matrix is computed using the \code{cluster.boot} command from the \code{multiwayvcov} package: \code{multiwayvcov::cluster.boot(model, var_cluster, R = 1000, boot_type = "wild", wild_type = function() sample(c(-1, 1), 1))}.
 }
 
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+  A list of class ("mod_vcov" "list") containing two items:
+  \item{model}{The linear regression model supplied as input}
+  \item{vcov_mat}{A variance-covariance matrix for the linear regression model supplied in the function}
+  For output's attributes depend on the \code{type} selected in the function call:
+  \item{\code{type == 0}}{The attribute "type" is set to "standard"}
+  \item{\code{type == 1}}{The attribute "type" is set to "robust", the attribute "var_cluster" takes the value supplied as variable \code{var_cluster}}
+  \item{\code{type == 2}}{The attribute "type" is set to "robust_boot", the attribute "var_cluster" takes the value supplied as variable \code{var_cluster}}
 }
 
 \seealso{
