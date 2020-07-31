@@ -10,7 +10,7 @@
 \title{Prepare model summary}
 
 \description{
-  The function \code{model_summary} computes coefficient estimates for linear regression models or linear fixe effects models. For linear models, the user can provide a cluster variable to cluster the standard errors and can select to use bootstraping for clustering.
+  The function \code{model_summary} computes coefficient estimates for linear regression models or linear fixed effects models. For linear models, the user can provide a cluster variable to cluster the standard errors and can select to use bootstraping for clustering.
 }
 
 \usage{
@@ -27,7 +27,7 @@
 }
 
 \details{
-  For input of class "lm" or "glm" the options \code{type == 0},  \code{type == 1}, and \code{type == 2} control how the variance-covariance matrix for standard error estimation is computed.
+  For input of class "lm" or "glm" the options \code{type == 0},  \code{type == 1}, and \code{type == 2} control how the variance-covariance matrix for standard error estimation is computed. The options \code{type == 1} and \code{type == 2} require a cluster variable defined in \code{var_cluster}.
 }
 
 \value{
