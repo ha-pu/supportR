@@ -36,11 +36,11 @@
       out <- stargazer::stargazer(object, type = "html", summary = FALSE, rownames = FALSE)
       out <- gsub("\\* ", "*", out)
       out <- cat(out, sep = "\n")
-       tf <- tempfile()
+      tf <- tempfile()
       sink(tf)
-      print_correlation(data_cor, print = TRUE, html = TRUE)
+      out
       sink()
-      out <- read_lines(tf, skip = 1)
+      out <- readLines(tf)[-1]
       out <- out[seq(length(out) / 2)[-length(out) / 2]]
       return(out)
     } else {
