@@ -40,10 +40,11 @@
 \examples{
   data <- supportR::create_data()
 
-  mod1 <- lm(firm_value ~ profit + cogs + rnd + competition * board_size, data = data)
+  mod1 <- lm(ebit ~ advertising + assets + international + revenue * rnd, data = data)
   model_vcov(model = mod1, type = 0, var_cluster = NULL)
   model_vcov(model = mod1, type = 1, var_cluster = data$country)
 
-  mod2 <- glm(female_ceo ~ profit + cogs + rnd + ceo_age * board_size, data = data, family = "binomial")
-  model_vcov(model = mod2, type = 2, var_cluster = data$industry)
+  mod2 <- glm(female_ceo ~ advertising + assets + international + revenue * rnd,
+  data = data, family = "binomial")
+  model_vcov(model = mod2, type = 2, var_cluster = data$country)
 }

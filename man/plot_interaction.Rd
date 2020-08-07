@@ -41,18 +41,22 @@
 \examples{
   data <- supportR::create_data()
 
-  mod1 <- lm(firm_value ~ profit + cogs + rnd + competition * board_size, data = data)
+  mod1 <- lm(ebit ~ advertising + assets + country + international * rnd, data = data)
   mod1_vcov <- model_vcov(model = mod1, type = 1, var_cluster = data$country)
-  plot_interaction(input = mod1_vcov, iv = "competition", moderator = "board_size", ci = 0.9)
-  plot_interaction(input = mod1, iv = "competition", moderator = "board_size", ci = 0.9, type = 0, var_cluster = NULL)
+  plot_interaction(input = mod1_vcov, iv = "international", moderator = "rnd", ci = 0.9)
+  plot_interaction(input = mod1, iv = "international", moderator = "rnd",
+	ci = 0.9, type = 0, var_cluster = NULL)
 
+  mod2 <- glm(female_ceo ~ advertising + assets + country + international * rnd,
+	data = data, family = "binomial")
+  plot_interaction(input = mod2, iv = "international", moderator = "rnd",
+	ci = 0.9, type = 2, var_cluster = data$country)
 
-  mod2 <- glm(female_ceo ~ profit + cogs + rnd + ceo_age * board_size, data = data, family = "binomial")
-  plot_interaction(input = mod2, iv = "ceo_age", moderator = "board_size", ci = 0.9, type = 2, var_cluster = data$industry)
+  mod3 <- lme4::lmer(ebit ~ advertising + assets + country + international * rnd + (1 | country),
+	data = data)
+  plot_interaction(input = mod3, iv = "internationalTRUE", moderator = "rnd", ci = 0.9)
 
-  mod3 <- lme4::lmer(firm_value ~ profit + cogs + rnd + competition * board_size + (1 | country), data = data)
-  plot_interaction(input = mod3, iv = "competition", moderator = "board_size", ci = 0.9)
-
-  mod4 <- lme4::glmer(female_ceo ~ profit + cogs + rnd + ceo_age * board_size + (1 | industry), data = data, family = "binomial")
-  plot_interaction(input = mod4, iv = "ceo_age", moderator = "board_size", ci = 0.9)
+  mod4 <- lme4::glmer(female_ceo ~ advertising + assets + country + international * rnd +
+	(1 | country), data = data, family = "binomial")
+  plot_interaction(input = mod4, iv = "internationalTRUE", moderator = "rnd", ci = 0.9)
 }

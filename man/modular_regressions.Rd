@@ -8,7 +8,9 @@
 }
 
 \usage{
-  modular_regressions(type = "glm", fam = "gaussian", dv, cv = NULL, iv, mv, fe = NULL, robust_type = 0, var_cluster = NULL, data, full_model = TRUE, show = TRUE, show_cv = FALSE)
+  modular_regressions(type = "glm", fam = "gaussian", dv, cv = NULL, iv, mv, fe = NULL,
+	robust_type = 0, var_cluster = NULL, data, full_model = TRUE, show = TRUE,
+	show_cv = FALSE)
 }
 
 \arguments{
@@ -46,12 +48,27 @@
 \examples{
   data <- supportR::create_data()
 
-  modular_regressions(type = "glm", fam = "gaussian", dv = "firm_value", cv = c("rnd", "competition", "quality"), iv = "profit", mv = c("cogs", "board_size"), robust_type = 0, data = data, full_model = TRUE, show = TRUE, show_cv = FALSE)
-  modular_regressions(type = "glm", fam = "gaussian", dv = "firm_value", iv = "profit", mv = c("cogs", "board_size"), robust_type = 2, var_cluster = "industry", data = data, full_model = FALSE, show = TRUE, show_cv = FALSE)
-  modular_regressions(type = "glmer", fam = "gaussian", dv = "firm_value", cv = c("rnd", "competition", "quality"), iv = "profit", mv = c("cogs", "board_size"), fe = "industry", data = data, full_model = TRUE, show = FALSE, show_cv = FALSE)
+  modular_regressions(type = "glm", fam = "gaussian", dv = "ebit",
+	cv = c("advertising", "assets", "sic"), iv = "revenue", mv = c("rnd", "staff"),
+	robust_type = 0, data = data, full_model = TRUE, show = TRUE, show_cv = FALSE)
+  modular_regressions(type = "glm", fam = "gaussian", dv = "ebit",
+	cv = c("advertising", "assets", "sic"), iv = "revenue", mv = c("rnd", "staff"),
+	robust_type = 2, var_cluster = "country", data = data,
+	full_model = FALSE, show = TRUE, show_cv = FALSE)
+  modular_regressions(type = "glmer", fam = "gaussian", dv = "ebit",
+	cv = c("advertising", "assets", "sic"), iv = "revenue", mv = c("rnd", "staff"),
+	fe = "country", data = data, full_model = TRUE, show = FALSE, show_cv = FALSE)
   
-  modular_regressions(type = "glm", fam = "binomial", dv = "female_ceo", cv = c("rnd", "competition", "quality"), iv = "profit", mv = c("cogs", "board_size"), robust_type = 0, var_cluster = NULL, data = data, full_model = TRUE, show = TRUE, show_cv = TRUE)
-  modular_regressions(type = "glm", fam = "binomial", dv = "female_ceo", cv = c("rnd", "competition", "quality"), iv = "profit", mv = c("cogs", "board_size"), robust_type = 2, var_cluster = "industry", data = data, full_model = FALSE, show = TRUE, show_cv = FALSE)
-  modular_regressions(type = "glmer", fam = "binomial", dv = "female_ceo", iv = "profit", mv = c("cogs", "board_size"), fe = "industry", data = data, full_model = TRUE, show = TRUE, show_cv = FALSE)
+  modular_regressions(type = "glm", fam = "binomial", dv = "female_ceo",
+	cv = c("advertising", "assets", "sic"), iv = "revenue", mv = c("rnd", "staff"),
+	robust_type = 0, var_cluster = NULL, data = data,
+	full_model = TRUE, show = TRUE, show_cv = TRUE)
+  modular_regressions(type = "glm", fam = "binomial", dv = "female_ceo",
+	cv = c("advertising", "assets", "sic"), iv = "revenue", mv = c("rnd", "staff"),
+	robust_type = 2, var_cluster = "country", data = data,
+	full_model = FALSE, show = TRUE, show_cv = FALSE)
+  modular_regressions(type = "glmer", fam = "binomial", dv = "female_ceo",
+	iv = "revenue", mv = c("rnd", "staff"), fe = "country",
+	data = data, full_model = TRUE, show = TRUE, show_cv = FALSE)
 
 }

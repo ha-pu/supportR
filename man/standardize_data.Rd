@@ -10,7 +10,7 @@
 }
 
 \usage{
-  standardize_data(x)
+  standardize_data(data, center = TRUE, scale = TRUE)
 }
 
 \arguments{

@@ -47,17 +47,20 @@
 \examples{
   data <- supportR::create_data()
 
-  mod1 <- lm(firm_value ~ profit + cogs + rnd + competition * board_size, data = data)
+  mod1 <- lm(ebit ~ advertising + assets + revenue + international * rnd, data = data)
   mod1_vcov <- model_vcov(model = mod1, type = 1, var_cluster = data$country)
   model_summary(input = mod1_vcov, show = TRUE, sg = FALSE)
   model_summary(input = mod1, type = 0, var_cluster = NULL, show = TRUE, sg = FALSE)
 
-  mod2 <- glm(female_ceo ~ profit + cogs + rnd + ceo_age * board_size, data = data, family = "binomial")
-  model_summary(input = mod2, type = 2, var_cluster = data$industry, show = TRUE, sg = FALSE)
+  mod2 <- glm(female_ceo ~ advertising + assets + revenue + international * rnd,
+	data = data, family = "binomial")
+  model_summary(input = mod2, type = 2, var_cluster = data$country, show = TRUE, sg = FALSE)
 
-  mod3 <- lme4::lmer(firm_value ~ profit + cogs + rnd + competition * board_size + (1 | country), data = data)
+  mod3 <- lme4::lmer(ebit ~ advertising + assets + revenue + international * rnd +
+	(1 | country), data = data)
   model_summary(input = mod3, randfe = TRUE, show = FALSE, sg = FALSE)
 
-  mod4 <- lme4::glmer(female_ceo ~ profit + cogs + rnd + ceo_age * board_size + (1 | industry), data = data, family = "binomial")
+  mod4 <- lme4::glmer(female_ceo ~ advertising + assets + revenue + international * rnd +
+	(1 | country), data = data, family = "binomial")
   model_summary(input = mod4, randfe = FALSE, show = FALSE, sg = TRUE)
 }

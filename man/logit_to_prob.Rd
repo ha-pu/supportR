@@ -30,7 +30,7 @@
 
 \examples{
   data <- supportR::create_data()
-  mod <- glm(female_ceo ~ board_size, data = data, family = "binomial")
+  mod <- glm(female_ceo ~ advertising, data = data, family = "binomial")
   coefs <- coef(mod)
-  logit_to_prob(logit = coefs[["board_size"]])
+  logit_to_prob(logit = coefs[["advertising"]])
 }
