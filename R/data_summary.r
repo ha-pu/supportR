@@ -5,7 +5,7 @@ data_summary <- function(input, ...) UseMethod("data_summary", input)
 data_summary.data.frame <- function(input, at, show = TRUE, ...) {
   if (is.numeric(at)) {
     if (is.double(at)) {
-      warning("'at' of class 'double' is coerced to class 'integer'!")
+      message("'at' of class 'double' is coerced to class 'integer'!")
       at <- as.integer(at)
     }
     at <- names(input)[at]
@@ -29,7 +29,7 @@ data_summary.data.frame <- function(input, at, show = TRUE, ...) {
       return(out)
     }
   } else {
-   warning("'at' must be class 'character' or 'numeric'!")
+   stop("'at' must be class 'character' or 'numeric'!")
   }
 }
 

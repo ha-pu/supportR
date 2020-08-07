@@ -32,16 +32,20 @@
   }
 
   if (html) {
-    out <- stargazer::stargazer(object, type = "html", summary = FALSE, rownames = FALSE)
-    out <- gsub("\\* ", "*", out)
-    out <- cat(out, sep = "\n")
-    tf <- tempfile()
-    sink(tf)
-    print_correlation(data_cor, print = TRUE, html = TRUE)
-    sink()
-    out <- read_lines(tf, skip = 1)
-    out <- out[seq(length(out) / 2)[-length(out) / 2]]
-    return(out)
+	  if (requireNamespace("stargazer", quietly = TRUE)) {
+      out <- stargazer::stargazer(object, type = "html", summary = FALSE, rownames = FALSE)
+      out <- gsub("\\* ", "*", out)
+      out <- cat(out, sep = "\n")
+       tf <- tempfile()
+      sink(tf)
+      print_correlation(data_cor, print = TRUE, html = TRUE)
+      sink()
+      out <- read_lines(tf, skip = 1)
+      out <- out[seq(length(out) / 2)[-length(out) / 2]]
+      return(out)
+    } else {
+      stop("html == TRUE requires 'stargazer' package!")
+    }
   } else {
     cat(insight::format_table(object))
   }

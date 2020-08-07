@@ -6,6 +6,6 @@ clean_names <- function(data) {
     out <- janitor::clean_names(data)
 	return(out)
   } else {
-    warning("'clean_names' requires the 'jantitor' package!")
+    stop("'clean_names' requires the 'jantitor' package!")
   }
 }
