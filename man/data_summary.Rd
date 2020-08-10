@@ -54,7 +54,7 @@
   }
   
   The exact output for the function depends on the data provided as \code{input}:
-  itemize{
+  \itemize{
     \item{\code{data.frame}}{The summary is provided for each variables selected in \code{at} in a separate row, the summary statistics depend on the variable type}
     \item{\code{grouped_df}}{As for \code{data.frame} but the summary is provided for each group separately, the respective group is shown in the variable \code{Cluster}}
     \item{\code{numeric}}{All output columns except "Groups"}
