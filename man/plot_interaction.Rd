@@ -14,13 +14,15 @@
 }
 
 \usage{
-  plot_interaction(input, iv, moderator, ci = 0.9, type = 0, var_cluster = NULL)
+  plot_interaction(input, iv, moderator, name_iv = iv, name_mod = moderator, ci = 0.9, type = 0, var_cluster = NULL)
 }
 
 \arguments{
   \item{input}{Object of class "mod_vcov", linear model of class "lm" or "glm", or linear fixed effects model of class "lmerMod" or "glmerMod"}
   \item{iv}{\code{character} giving the name of the independt variable for which the interaction effect is plotted - for \code{input} is class "lmerMod" or "glmerMod" a logical iv must be indicated as "variableTRUE""}
-  \item{moderator}{\code{character} giving the name of the variable that moderates the interaction effect - the moderator variable mustnot be of class "logical"}
+  \item{moderator}{\code{character} giving the name of the moderator variable (the x-axis of the plot) - the moderator variable mustnot be of class "logical"}
+  \item{name_iv}{\code{character} giving the label for the independent variable used for the title of the plot}
+  \item{name_mod}{\code{character} giving the label for the moderator variable used for the x-axis of the plot}
   \item{ci}{Confidence interval shown in interaction plot - must be numeric between 0 and 1}
   \item{type}{Indicator which type of standard errors is to be computed: 0 - no clustering, 1 - clustering using \code{var_cluster}, 2 - clustering using \code{var_cluster} with bootstraping}
   \item{var_cluster}{Vector, matrix, or data.frame containing the variables that are used for clustering}
