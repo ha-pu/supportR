@@ -2,13 +2,21 @@
 plot_interaction <- function(input, ...) UseMethod("plot_interaction", input)
 
 # plot_interaction mod_vcov method ----
-plot_interaction.mod_vcov <- function(input, iv, moderator, ci = 0.9, ...) {
+plot_interaction.mod_vcov <- function(input, iv, moderator, name_iv = iv, name_mod = moderator, ci = 0.9, ...) {
   
   # run checks ----
-  if (!is.character(iv) | !is.character(moderator)) stop("iv and moderator must be character variables!")
+  if (!is.character(iv) | !is.character(moderator)) stop("iv and moderator must be character values!")
+  if (!is.character(name_iv)) {
+    name_iv <- iv
+    warning("name_iv must be a character value! Use default value iv for name_iv.")
+  }
+  if (!is.character(name_mod)) {
+    name_mod <- iv
+    warning("name_mod must be a character value! Use default value moderator for name_mod.")
+  }
   if (!is.numeric(ci) | ci >= 1) {
     ci <- 0.9
-    warning("ci must be a numeric value < 1! Use default value for ci 0.9.")
+    warning("ci must be a numeric value < 1! Use default value 0.9 for ci.")
   }
   
   # get data ----
@@ -34,32 +42,40 @@ plot_interaction.mod_vcov <- function(input, iv, moderator, ci = 0.9, ...) {
     ggplot2::geom_line(ggplot2::aes(y = upper), linetype = 2) +
     ggplot2::geom_line(ggplot2::aes(y = lower), linetype = 2) +
     ggplot2::geom_rug(data = data_rug, ggplot2::aes(rug), sides = "b") +
-    ggplot2::labs(title = paste0("marginal effect ", iv), subtitle = paste0(ci * 100, "% confidence interval"), x = moderator, y = "marginal effect", caption = caption)
+    ggplot2::labs(title = paste0("marginal effect ", name_iv), subtitle = paste0(ci * 100, "% confidence interval"), x = name_mod, y = "marginal effect", caption = caption)
   
   return(out)
 }
 
 # plot_interaction lm and glm method ----
-plot_interaction.lm <- plot_interaction.glm <- function(input, iv, moderator, ci = 0.9, type = 0, var_cluster = NULL, ...) {
+plot_interaction.lm <- plot_interaction.glm <- function(input, iv, moderator, name_iv = iv, name_mod = moderator, ci = 0.9, type = 0, var_cluster = NULL, ...) {
   out <- model_vcov(model = input, type = type, var_cluster = var_cluster)
-  out <- plot_interaction(input = out, iv = iv, moderator = moderator, ci = ci)
+  out <- plot_interaction(input = out, iv = iv, moderator = moderator, name_iv = name_iv, name_mod = name_mod, ci = ci)
   
   return(out)
 }
 
 # plot_interaction lmerMod and glmerMod method ----
-plot_interaction.lmerMod <- plot_interaction.glmerMod <- function(input, iv, moderator, ci = 0.9, ...) {
+plot_interaction.lmerMod <- plot_interaction.glmerMod <- function(input, iv, moderator, name_iv = iv, name_mod = moderator, ci = 0.9, ...) {
   
   # run checks ----
-  if (!is.character(iv) | !is.character(moderator)) stop("iv and moderator must be character variables!")
+  if (!is.character(iv) | !is.character(moderator)) stop("iv and moderator must be character values!")
+  if (!is.character(name_iv)) {
+    name_iv <- iv
+    warning("name_iv must be a character value! Use default value iv for name_iv.")
+  }
+  if (!is.character(name_mod)) {
+    name_mod <- iv
+    warning("name_mod must be a character value! Use default value moderator for name_mod.")
+  }
   if (!is.numeric(ci) | ci >= 1) {
     ci <- 0.9
-    warning("ci must be a numeric value < 1! Use default value for ci 0.9.")
+    warning("ci must be a numeric value < 1! Use default value 0.9 for ci.")
   }
   
   # draw plot ----
   out <- interplot::interplot(input, var1 = iv, var2 = moderator, ci = ci, hist = TRUE) +
-    ggplot2::labs(title = paste0("marginal effect ", iv), subtitle = paste0(ci * 100, "% confidence interval"), x = moderator, y = "marginal effect", caption = "Linear fixed effects model") +
+    ggplot2::labs(title = paste0("marginal effect ", name_iv), subtitle = paste0(ci * 100, "% confidence interval"), x = name_mod, y = "marginal effect", caption = "Linear fixed effects model") +
     ggplot2::geom_hline(yintercept = 0)
   
   return(out)
