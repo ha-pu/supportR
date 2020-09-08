@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean_names.r
 \name{clean_names}
 \alias{clean_names}
-\title{Clean names of an object.}
+\title{Clean names of an object}
 \usage{
 clean_names(data)
 }
@@ -21,7 +21,7 @@ The function requires that the \code{janitor} is installed!
 }
 
 \examples{
-data <- create_data()
+data <- create_data(n = 50)
 names(data) <- gsub("_", ".", names(data))
 clean_names(data)
 

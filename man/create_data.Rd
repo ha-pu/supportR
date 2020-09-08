@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_data.r
 \name{create_data}
 \alias{create_data}
-\title{Create data.}
+\title{Create data}
 \usage{
 create_data(n = 1000)
 }
@@ -27,35 +27,36 @@ individually, so relationships observed in the data are simulated by
 The function \code{create_data} generates a \code{data.frame} with \code{n}
 rows (defaults to 1,000) and the following 11 columns:
  \itemize{
-   \item{\code{advertising} [\code{double}] - simulated as
-   \code{trunc_rnorm(n = n, mean = 97, sd = 326, lwr = 0)}}
-   \item{\code{assets} [\code{double}] - simulated as
-   \code{trunc_rnorm(n = n, mean = 14589, sd = 98124, lwr = 0)}}
-   \item{\code{country} [\code{character}] - simulated as
-   \code{sample(LETTERS[1:4], size = n, replace = TRUE)}}
-   \item{\code{female_ceo} [\code{logical}] - simulated as
-   \code{as.logical(rbinom(n = n, size = 1, prob = 0.1))}}
-   \item{\code{international} [\code{logical}] - simulated as
-   \code{as.logical(rbinom(n = n, size = 1, prob = 0.1))}}
-   \item{\code{revenue} [\code{double}] - simulated as
-   \code{trunc_rnorm(n = n, mean = 3796, sd = 15420, lwr = 0)}}
-   \item{\code{rnd} [\code{double}] - simulated as
-   \code{trunc_rnorm(n = n, mean = 200, sd = 752, lwr = 0)}}
-   \item{\code{sic} [\code{factor}] - simulated as
+   \item \code{advertising} [\code{double}] - simulated as
+   \code{trunc_rnorm(n = n, mean = 97, sd = 326, lwr = 0)}
+   \item \code{assets} [\code{double}] - simulated as
+   \code{trunc_rnorm(n = n, mean = 14589, sd = 98124, lwr = 0)}
+   \item \code{country} [\code{character}] - simulated as
+   \code{sample(LETTERS[1:4], size = n, replace = TRUE)}
+   \item \code{female_ceo} [\code{logical}] - simulated as
+   \code{as.logical(rbinom(n = n, size = 1, prob = 0.1))}
+   \item \code{international} [\code{logical}] - simulated as
+   \code{as.logical(rbinom(n = n, size = 1, prob = 0.1))}
+   \item \code{revenue} [\code{double}] - simulated as
+   \code{trunc_rnorm(n = n, mean = 3796, sd = 15420, lwr = 0)}
+   \item \code{rnd} [\code{double}] - simulated as
+   \code{trunc_rnorm(n = n, mean = 200, sd = 752, lwr = 0)}
+   \item \code{sic} [\code{factor}] - simulated as
    \code{as.factor(sample(0:9, size = n, replace = TRUE, prob =
-   c(0.05, 0.1, 0.1, 0.1, 0.05, 0.05, 0.35, 0.1, 0.05, 0.05)))}}
-   \item{\code{staff} [\code{double}] - simulated as
-   \code{trunc_rnorm(n = n, mean = 649, sd = 2145, lwr = 0)}}
-   \item{\code{stock_ownership} [\code{character}] - simulated as
-   \code{sample(LETTERS[1:4], size = n, replace = TRUE)}}
-   \item{\code{ebit} [\code{double}] - simulated as the result
+   c(0.05, 0.1, 0.1, 0.1, 0.05, 0.05, 0.35, 0.1, 0.05, 0.05)))}
+   \item \code{staff} [\code{double}] - simulated as
+   \code{trunc_rnorm(n = n, mean = 649, sd = 2145, lwr = 0)}
+   \item \code{stock_ownership} [\code{character}] - simulated as
+   \code{sample(LETTERS[1:4], size = n, replace = TRUE)}
+   \item \code{ebit} [\code{double}] - simulated as the result
    of the other variables, using and intercept of -296 and and a
-   random error term (\code{rnorm(n = n, mean = 0, sd = 500)})}
+   random error term (\code{rnorm(n = n, mean = 0, sd = 500)})
  }
 }
 \examples{
 create_data()
 create_data(n = 50)
+
 }
 \seealso{
 \code{\link[supportR]{trunc_rnorm}}
