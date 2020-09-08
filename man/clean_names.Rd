@@ -21,8 +21,10 @@ The function requires that the \code{janitor} is installed!
 }
 
 \examples{
+data <- create_data()
 names(data) <- gsub("_", ".", names(data))
 clean_names(data)
+
 }
 \seealso{
 \code{\link[janitor]{clean_names}}
