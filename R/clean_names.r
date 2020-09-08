@@ -1,5 +1,5 @@
 #' @title
-#' Clean names of an object.
+#' Clean names of an object
 #'
 #' @description
 #' The function imports the \code{clean_names} function from the \code{janitor} package.
@@ -14,10 +14,11 @@
 #' @return The input object \code{data} with clean column names.
 #'
 #' @examples
-#' data <- create_data()
+#' data <- create_data(n = 50)
 #' names(data) <- gsub("_", ".", names(data))
 #' clean_names(data)
 #'
+#' @export
 #' @importFrom janitor clean_names
 
 # clean_names ----
