@@ -10,10 +10,14 @@
 #' @seealso \code{\link[janitor]{clean_names}}
 #'
 #' @param data Object, usually \code{data.frame}, with column names to clean.
+#'
 #' @return The input object \code{data} with clean column names.
+#'
 #' @examples
+#' data <- create_data()
 #' names(data) <- gsub("_", ".", names(data))
 #' clean_names(data)
+#'
 #' @importFrom janitor clean_names
 
 # clean_names ----
