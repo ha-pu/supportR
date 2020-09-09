@@ -24,7 +24,6 @@ The function requires that the \code{janitor} is installed!
 data <- create_data(n = 50)
 names(data) <- gsub("_", ".", names(data))
 clean_names(data)
-
 }
 \seealso{
 \code{\link[janitor]{clean_names}}

@@ -56,7 +56,6 @@ rows (defaults to 1,000) and the following 11 columns:
 \examples{
 create_data()
 create_data(n = 50)
-
 }
 \seealso{
 \code{\link[supportR]{trunc_rnorm}}

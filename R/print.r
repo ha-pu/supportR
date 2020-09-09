@@ -1,6 +1,11 @@
-# print model_summary method ----
+#' @title Print
+#'
+#' @rdname print
+#' @method print model_summary
+#' @export
+
 print.model_summary <- function(x, ...) {
-  
+
   # prepate data ----
   x$sig <- ""
   x$sig[x$p_value <= 0.1] <- "."
@@ -19,8 +24,10 @@ print.model_summary <- function(x, ...) {
   }
 }
 
+#' @rdname print
+#' @method print model_randfe
+#' @export
 
-# print model_randfe method ----
 print.model_randfe <- function(x, ...) {
   if (requireNamespace("knitr", quietly = TRUE)) {
     knitr::kable(x, digits = 3)

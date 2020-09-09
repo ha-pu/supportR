@@ -1,5 +1,4 @@
-#' @title
-#' Data summary
+#' @title Data summary
 #'
 #' @aliases
 #' data_summary
@@ -45,8 +44,6 @@
 #'     \item \code{factor} - As for \code{character}
 #'   }
 #'
-#' @seealso \code{\link[supportR]{trunc_rnorm}}
-#'
 #' @param input Data that should be summarized, can be of class
 #' \code{"data.frame"}, \code{"grouped_df"}, \code{"numeric"},
 #' \code{"logical"}, \code{"character"}, \code{"factor"}.
@@ -68,22 +65,19 @@
 #' data_summary(data, at = c("ebit", "female_ceo", "sic", "country"))
 #' data_summary(data$ebit, show = FALSE)
 #' data_summary(dplyr::group_by(data, female_ceo), at = c("ebit", "country"))
-#'
 #' @rdname data_summary
 #' @export
+#' @importFrom dplyr bind_rows
 #' @importFrom dplyr ungroup
 #' @importFrom tidyr gather
 #' @importFrom tidyr spread
-#' @importFrom dplyr bind_rows
 
-# data_summary generic function ----
 data_summary <- function(input, ...) UseMethod("data_summary", input)
 
 #' @rdname data_summary
 #' @method data_summary data.frame
 #' @export
 
-# data_summary data.frame method ----
 data_summary.data.frame <- function(input, at, show = TRUE, ...) {
   if (is.numeric(at)) {
     if (is.double(at)) {
@@ -94,7 +88,7 @@ data_summary.data.frame <- function(input, at, show = TRUE, ...) {
   }
   if (is.character(at)) {
     input <- as.data.frame(input)
-    out <- lapply(at, function(x) .hlpr_get_summary(input[,x]))
+    out <- lapply(at, function(x) .hlpr_get_summary(input[, x]))
     out <- cbind.data.frame(out)
     colnames(out) <- at
     out$Statistic <- stat
@@ -103,7 +97,7 @@ data_summary.data.frame <- function(input, at, show = TRUE, ...) {
     out <- spread(out, key = Statistic, value = value)
 
     out <- out[c("Variable", stat)]
-    out[,stat[-1]] <- sapply(out[,stat[-1]], as.numeric)
+    out[, stat[-1]] <- sapply(out[, stat[-1]], as.numeric)
 
     if (show) {
       .hlpr_print_summary(input = out)
@@ -111,7 +105,7 @@ data_summary.data.frame <- function(input, at, show = TRUE, ...) {
       return(out)
     }
   } else {
-   stop("'at' must be class 'character' or 'numeric'!")
+    stop("'at' must be class 'character' or 'numeric'!")
   }
 }
 
@@ -119,26 +113,25 @@ data_summary.data.frame <- function(input, at, show = TRUE, ...) {
 #' @method data_summary grouped_df
 #' @export
 
-# data_summary grouped_df method ----
 data_summary.grouped_df <- function(input, at, show = TRUE, ...) {
-  if (ncol(attr(input,"groups")) > 2) {
+  if (ncol(attr(input, "groups")) > 2) {
     warning("'data_summary' uses only the first group for clustering!")
   }
   out <- lapply(attr(input, "groups")$.rows, function(x) {
-    out <- data_summary(input = ungroup(input[x,]), at = at, show = FALSE)
+    out <- data_summary(input = ungroup(input[x, ]), at = at, show = FALSE)
     return(out)
   })
   out <- bind_rows(out)
-  out$Cluster <- paste(names(attr(input,"groups"))[[1]], rep(as.data.frame(attr(input,"groups"))[,1], each = length(at)), sep = ": ")
-  out <- out[,c("Variable", "Cluster", stat)]
-  out <- out[order(out$Variable, out$Cluster),]
+  out$Cluster <- paste(names(attr(input, "groups"))[[1]], rep(as.data.frame(attr(input, "groups"))[, 1], each = length(at)), sep = ": ")
+  out <- out[, c("Variable", "Cluster", stat)]
+  out <- out[order(out$Variable, out$Cluster), ]
 
   if (show) {
     .hlpr_print_summary(input = out)
   } else {
     if (requireNamespace("tibble", quietly = TRUE)) {
       out <- tibble::as_tibble(out)
-	}
+    }
     return(out)
   }
 }
@@ -147,7 +140,6 @@ data_summary.grouped_df <- function(input, at, show = TRUE, ...) {
 #' @method data_summary numeric
 #' @export
 
-# data_summary numeric method ----
 data_summary.numeric <- function(input, show = TRUE, ...) {
   input <- as.data.frame(input)
   out <- data_summary(input = input, at = "input", show = FALSE)
@@ -163,21 +155,18 @@ data_summary.numeric <- function(input, show = TRUE, ...) {
 #' @method data_summary logical
 #' @export
 
-# data_summary logical method ----
 data_summary.logical <- data_summary.numeric
 
 #' @rdname data_summary
 #' @method data_summary character
 #' @export
 
-# data_summary character method ----
 data_summary.character <- data_summary.numeric
 
 #' @rdname data_summary
 #' @method data_summary factor
 #' @export
 
-# data_summary factor method ----
 data_summary.factor <- data_summary.numeric
 
 stat <- c("Type", "n", "SD", "Min.", "1st Qu.", "Mean", "Median", "3rd Qu.", "Max.", "Groups")

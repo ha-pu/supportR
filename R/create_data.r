@@ -12,8 +12,8 @@
 #' individually, so relationships observed in the data are simulated by
 #' \code{create_data}.
 #'
-#'The function \code{create_data} generates a \code{data.frame} with \code{n}
-#'rows (defaults to 1,000) and the following 11 columns:
+#' The function \code{create_data} generates a \code{data.frame} with \code{n}
+#' rows (defaults to 1,000) and the following 11 columns:
 #'  \itemize{
 #'    \item \code{advertising} [\code{double}] - simulated as
 #'    \code{trunc_rnorm(n = n, mean = 97, sd = 326, lwr = 0)}
@@ -51,12 +51,13 @@
 #' @examples
 #' create_data()
 #' create_data(n = 50)
-#'
 #' @export
+#' @importFrom stats rbinom
+#' @importFrom stats rnorm
+#' @importFrom stats sd
 
 # create_data ----
 create_data <- function(n = 1000) {
-
   data_value <- data.frame(
     advertising = trunc_rnorm(n = n, mean = 97, sd = 326, lwr = 0),
     assets = trunc_rnorm(n = n, mean = 14589, sd = 98124, lwr = 0),
@@ -74,7 +75,7 @@ create_data <- function(n = 1000) {
   data_value$ebit <- data_value$ebit + data_value$female_ceo * -66
   data_value$ebit <- data_value$ebit + data_value$assets * 0.02
   data_value$ebit <- data_value$ebit + data_value$revenue * 0.06
-  data_value$ebit <-  data_value$ebit + data_value$advertising * 0.77
+  data_value$ebit <- data_value$ebit + data_value$advertising * 0.77
   data_value$ebit <- data_value$ebit + data_value$staff * -0.36
   data_value$ebit <- data_value$ebit + data_value$rnd * 1.19
   data_value$ebit <- data_value$ebit + data_value$international * 293

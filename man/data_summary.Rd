@@ -83,8 +83,4 @@ data <- create_data(n = 50)
 data_summary(data, at = c("ebit", "female_ceo", "sic", "country"))
 data_summary(data$ebit, show = FALSE)
 data_summary(dplyr::group_by(data, female_ceo), at = c("ebit", "country"))
-
-}
-\seealso{
-\code{\link[supportR]{trunc_rnorm}}
 }
