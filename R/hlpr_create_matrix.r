@@ -1,4 +1,7 @@
-# .hlpr_create_matrix ----
+#' @title create_matrix
+#'
+#' @keywords internal
+
 .hlpr_create_matrix <- function(frame, object, column = "r") {
   if ("Group" %in% names(object)) {
     out <- data.frame()

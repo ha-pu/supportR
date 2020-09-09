@@ -1,4 +1,7 @@
-# .hlpr_paste ----
+#' @title paste
+#'
+#' @keywords internal
+
 .hlpr_paste <- function(element1, element2, sep, collapse) {
   out <- c()
   for (i in element2) {

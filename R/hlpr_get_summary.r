@@ -1,7 +1,19 @@
-# .hlpr_get_summary generic function ----
+#' @title get_summary
+#'
+#' @aliases
+#' .hlpr_get_summary
+#' .hlpr_get_summary.numeric
+#' .hlpr_get_summary.logical
+#' .hlpr_get_summary.character
+#' .hlpr_get_summary.factor
+#'
+#' @keywords internal
+
 .hlpr_get_summary <- function(input, ...) UseMethod(".hlpr_get_summary", input)
 
-# .hlpr_get_summary numeric method ----
+#' @method .hlpr_get_summary numeric
+#' @keywords internal
+
 .hlpr_get_summary.numeric <- function(input, ...) {
   input <- input[!is.na(input)]
   out <- c(
@@ -11,7 +23,9 @@
   return(out)
 }
 
-# .hlpr_get_summary logical method ----
+#' @method .hlpr_get_summary logical
+#' @keywords internal
+
 .hlpr_get_summary.logical <- function(input, ...) {
   input <- input[!is.na(input)]
   out <- c(
@@ -21,8 +35,10 @@
   return(out)
 }
 
-# .hlpr_get_summary character and factor method ----
-.hlpr_get_summary.character <- .hlpr_get_summary.factor <- function(input, ...) {
+#' @method .hlpr_get_summary character
+#' @keywords internal
+
+.hlpr_get_summary.character <- function(input, ...) {
   input <- input[!is.na(input)]
   out <- c(
     class(input),
@@ -38,3 +54,9 @@
   )
   return(out)
 }
+
+
+#' @method .hlpr_get_summary factor
+#' @keywords internal
+
+.hlpr_get_summary.factor <- .hlpr_get_summary.character

@@ -6,7 +6,7 @@ Authors@R: person("Harald", "Puhr", role = c("aut", "cre"), email = "harald.puhr
 Author: Harald Puhr [aut, cre]
 Maintainer: Harald Puhr <harald.puhr@gmail.com>
 Description: The package provides of various helper functions.
-License:  MIT + file LICENSE
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: false
 Imports:
@@ -28,3 +28,4 @@ Suggests:
     knitr,
     stargazer,
     tibble
+RoxygenNote: 7.1.1

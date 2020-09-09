@@ -1,4 +1,7 @@
-# .hlpr_fill_matrix ----
+#' @title fill_matrix
+#'
+#' @keywords internal
+
 .hlpr_fill_matrix <- function(frame, object, column = "r") {
   for (row in row.names(frame)) {
     for (col in colnames(frame)) {

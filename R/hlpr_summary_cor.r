@@ -1,6 +1,8 @@
-# .hlpr_summary_cor ----
-.hlpr_summary_cor <- function(object, stars = TRUE) {
+#' @title summary_cor
+#'
+#' @keywords internal
 
+.hlpr_summary_cor <- function(object, stars = TRUE) {
   frame <- .hlpr_get_matrix(object)
 
   target_col <- names(object)[names(object) %in% c("r", "rho", "tau", "Median")][1]

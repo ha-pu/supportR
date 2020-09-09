@@ -1,4 +1,10 @@
-# .hlpr_get_stats ----
+#' @title get_stats
+#'
+#' @keywords internal
+#' @importFrom stats median
+#' @importFrom stats quantile
+#' @importFrom stats sd
+
 .hlpr_get_stats <- function(input) {
   out <- c(
     class(input),
